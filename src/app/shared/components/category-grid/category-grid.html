@@ -1,0 +1,25 @@
+<section class="mb-5">
+  <h2 class="section-title mb-4">Популярные категории</h2>
+
+  <div class="row g-4">
+    @for (category of categories; track category.id) {
+    <div class="col-6 col-md-3">
+      <a
+        [routerLink]="['/category', category.id]"
+        class="category-card text-decoration-none"
+      >
+        <div class="card border-0 shadow-sm h-100">
+          <img
+            [src]="category.imageUrl"
+            class="card-img-top"
+            alt="{{ category.name }}"
+          />
+          <div class="card-body text-center">
+            <h5 class="card-title mb-0">{{ category.name }}</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+    }
+  </div>
+</section>

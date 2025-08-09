@@ -1,0 +1,66 @@
+Home
+<main>
+  <!-- Баннер -->
+  <app-hero-banner
+    title="Летняя распродажа"
+    subtitle="Скидки до 70% на тысячи товаров"
+    ctaText="Начать покупки"
+    imageUrl="assets/summer-sale-banner.jpg"
+  >
+  </app-hero-banner>
+
+  <!-- Индикатор загрузки -->
+  @if(isLoading){
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Загрузка...</span>
+    </div>
+  </div>
+  }
+
+  <!-- Основной контент -->
+  @if(!isLoading){
+  <div class="container">
+    <!-- Рекомендуемые товары -->
+    <app-product-carousel [products]="featuredProducts" title="Хиты продаж">
+    </app-product-carousel>
+
+    <!-- Категории -->
+    <app-category-grid [categories]="categories"></app-category-grid>
+
+    <!-- Новинки -->
+    <app-product-carousel
+      [products]="newArrivals"
+      title="Новые поступления"
+      seeAllLink="/products/new"
+    >
+    </app-product-carousel>
+
+    <!-- Преимущества -->
+    <section class="benefits-section bg-light py-5 mb-5">
+      <div class="row text-center">
+        <div class="col-md-3">
+          <i class="bi bi-truck fs-1 text-primary mb-3"></i>
+          <h5>Бесплатная доставка</h5>
+          <p>При заказе от 5000₽</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-arrow-repeat fs-1 text-primary mb-3"></i>
+          <h5>Легкий возврат</h5>
+          <p>В течение 14 дней</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-shield-check fs-1 text-primary mb-3"></i>
+          <h5>Безопасная оплата</h5>
+          <p>SSL-шифрование</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-headset fs-1 text-primary mb-3"></i>
+          <h5>Поддержка 24/7</h5>
+          <p>Чат и телефон</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  }
+</main>

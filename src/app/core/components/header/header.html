@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <i class="bi bi-shop me-2"></i>Магазин
+    </a>
+
+    <!-- Поиск -->
+    <div class="d-flex w-50 mx-4">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Поиск товаров..."
+        [(ngModel)]="searchQuery"
+      />
+      <button class="btn btn-light ms-2" (click)="search()">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+
+    <!-- Иконки действий -->
+    <div class="d-flex align-items-center">
+      <a routerLink="/user/wishlist" class="text-white me-3 position-relative">
+        <i class="bi bi-heart fs-5"></i>
+        @if(wishlistCount > 0){
+        <span
+          class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+        >
+          {{ wishlistCount }}
+        </span>
+        }
+      </a>
+
+      <a routerLink="/user/cart" class="text-white me-3 position-relative">
+        <i class="bi bi-cart3 fs-5"></i>
+        @if(wishlistCount > 0){
+        <span
+          class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+        >
+          {{ cartCount }}
+        </span>
+        }
+      </a>
+
+      <!-- Профиль/авторизация -->
+      <div class="dropdown">
+        <button
+          class="btn btn-outline-light dropdown-toggle"
+          data-bs-toggle="dropdown"
+        >
+          <i class="bi bi-person-circle me-1"></i> Аккаунт
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          @if(!isLoggedIn){
+          <li>
+            <a class="dropdown-item" routerLink="/auth/login">Войти</a>
+            <a class="dropdown-item" routerLink="/auth/register">Регистрация</a>
+          </li>
+          } @if(isLoggedIn){
+          <li>
+            <a class="dropdown-item" routerLink="/user/profile">Профиль</a>
+            <a class="dropdown-item" routerLink="/user/orders">Заказы</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="logout()">Выйти</a>
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
