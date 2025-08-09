@@ -50,17 +50,17 @@
           <i class="bi bi-person-circle me-1"></i> Аккаунт
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          @if(!isLoggedIn){
-          <li>
-            <a class="dropdown-item" routerLink="/auth/login">Войти</a>
-            <a class="dropdown-item" routerLink="/auth/register">Регистрация</a>
-          </li>
-          } @if(isLoggedIn){
+          @if(authService.isAuthenticated$ | async){
           <li>
             <a class="dropdown-item" routerLink="/user/profile">Профиль</a>
             <a class="dropdown-item" routerLink="/user/orders">Заказы</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" (click)="logout()">Выйти</a>
+          </li>
+          } @else {
+          <li>
+            <a class="dropdown-item" routerLink="/auth/login">Войти</a>
+            <a class="dropdown-item" routerLink="/auth/register">Регистрация</a>
           </li>
           }
         </ul>

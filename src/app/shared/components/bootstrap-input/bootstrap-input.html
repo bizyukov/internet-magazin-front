@@ -1,0 +1,19 @@
+<div class="mb-3">
+  <label class="form-label">{{ label }}</label>
+  <input
+    [type]="type"
+    class="form-control"
+    [placeholder]="placeholder"
+    [formControlName]="controlName"
+    [class.is-invalid]="showErrors && controlErrors"
+  />
+  <ng-content></ng-content>
+
+  <div *ngIf="showErrors && controlErrors" class="invalid-feedback">
+    <div *ngIf="controlErrors['required']">Поле обязательно для заполнения</div>
+    <div *ngIf="controlErrors['email']">Некорректный email</div>
+    <div *ngIf="controlErrors['minlength']">
+      Минимальная длина: {{ controlErrors["minlength"].requiredLength }}
+    </div>
+  </div>
+</div>

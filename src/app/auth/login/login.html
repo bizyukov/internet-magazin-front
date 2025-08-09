@@ -1,0 +1,85 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="text-center mb-4">
+      <h2 class="auth-title">Вход в аккаунт</h2>
+      <p class="text-muted">Введите ваши учетные данные</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email -->
+      <app-bootstrap-input
+        label="Email"
+        type="email"
+        controlName="email"
+        placeholder="example@mail.ru"
+        [errors]="email?.errors"
+        [showErrors]="!!email?.touched"
+      ></app-bootstrap-input>
+
+      <!-- Password -->
+      <app-bootstrap-input
+        label="Пароль"
+        type="password"
+        controlName="password"
+        placeholder="••••••••"
+        [errors]="password?.errors"
+        [showErrors]="!!password?.touched"
+      >
+        <div class="mt-2">
+          <app-password-strength-meter
+            [password]="password?.value || ''"
+          ></app-password-strength-meter>
+        </div>
+      </app-bootstrap-input>
+
+      <!-- Remember me & Forgot password -->
+      <div class="d-flex justify-content-between mb-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="rememberMe"
+            formControlName="rememberMe"
+          />
+          <label class="form-check-label" for="rememberMe">
+            Запомнить меня
+          </label>
+        </div>
+
+        <a routerLink="/auth/forgot-password" class="text-decoration-none">
+          Забыли пароль?
+        </a>
+      </div>
+
+      <!-- Submit button -->
+      <button
+        class="btn btn-primary w-100 mb-3"
+        type="submit"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="!isLoading">Войти</span>
+        <span *ngIf="isLoading">
+          <span
+            class="spinner-border spinner-border-sm"
+            aria-hidden="true"
+          ></span>
+          <span role="status">Загрузка...</span>
+        </span>
+      </button>
+
+      <!-- Error message -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+    </form>
+
+    <div class="text-center mt-4">
+      <p class="mb-0">
+        Еще нет аккаунта?
+        <a routerLink="/auth/register" class="text-decoration-none fw-medium">
+          Зарегистрироваться
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
