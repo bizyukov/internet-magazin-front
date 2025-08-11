@@ -5,7 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { BootstrapInput } from '../../shared/components/bootstrap-input/bootstrap-input';
 import { PasswordStrengthMeter } from '../../shared/components/password-strength-meter/password-strength-meter';
 import { matchPasswordValidator } from '../../shared/validators/match-password.validator';
-import { Auth } from '../services/auth';
+import { AuthService } from '../services/auth';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +38,7 @@ export class Register {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private authService: Auth, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
     if (this.registerForm.invalid) return;

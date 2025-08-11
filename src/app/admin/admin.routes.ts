@@ -1,65 +1,52 @@
 // admin.routes.ts
 import { Routes } from '@angular/router';
-import { AdminAuthGuard } from '../core/guards/admin-auth.guard';
-import { AdminLayoutComponent } from './layout/admin-layout.component';
+import { AdminAuthGuard } from '../core/guards/admin-auth-guard';
+import { Categories } from './categories/categories';
+import { Dashboard } from './dashboard/dashboard';
+import { AdminLayout } from './layout/admin-layout/admin-layout';
+import { Manufacturers } from './manufacturers/manufacturers';
+import { Orders } from './orders/orders';
+import { ProductForm } from './product-form/product-form';
+import { Products } from './products/products';
+import { Users } from './users/users';
 
 export const ADMIN_ROUTES: Routes = [
   {
     path: '',
-    component: AdminLayoutComponent,
+    component: AdminLayout,
     canActivate: [AdminAuthGuard],
     children: [
       {
         path: 'dashboard',
-        loadComponent: () =>
-          import('./dashboard/dashboard.component').then(
-            (c) => c.DashboardComponent
-          ),
+        component: Dashboard,
       },
       {
         path: 'products',
-        loadComponent: () =>
-          import('./products/products.component').then(
-            (c) => c.ProductsComponent
-          ),
+        component: Products,
       },
       {
         path: 'products/create',
-        loadComponent: () =>
-          import('./product-form/product-form.component').then(
-            (c) => c.ProductFormComponent
-          ),
+        component: ProductForm,
       },
       {
         path: 'products/edit/:id',
-        loadComponent: () =>
-          import('./product-form/product-form.component').then(
-            (c) => c.ProductFormComponent
-          ),
+        component: ProductForm,
       },
       {
         path: 'categories',
-        loadComponent: () =>
-          import('./categories/categories.component').then(
-            (c) => c.CategoriesComponent
-          ),
+        component: Categories,
       },
       {
         path: 'manufacturers',
-        loadComponent: () =>
-          import('./manufacturers/manufacturers.component').then(
-            (c) => c.ManufacturersComponent
-          ),
+        component: Manufacturers,
       },
       {
         path: 'orders',
-        loadComponent: () =>
-          import('./orders/orders.component').then((c) => c.OrdersComponent),
+        component: Orders,
       },
       {
         path: 'users',
-        loadComponent: () =>
-          import('./users/users.component').then((c) => c.UsersComponent),
+        component: Users,
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Order, OrderStatus } from '../models/order.model';
+import { PaginatedResponse } from '../models/paginated-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,15 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  getOrders(userId: string): Observable<Order[]> {
-    return this.http.get<Order[]>(`${this.apiUrl}`, { params: { userId } });
+  getOrders(
+    userId: number,
+    itemsPerPage: number | undefined = undefined,
+    statusFilter: OrderStatus | undefined = undefined,
+    searchQuery: string | undefined = undefined
+  ): Observable<PaginatedResponse<Order>> {
+    return this.http.get<PaginatedResponse<Order>>(`${this.apiUrl}`, {
+      params: { userId },
+    });
   }
 
   getOrderDetails(orderId: string): Observable<Order> {

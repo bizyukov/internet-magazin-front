@@ -1,0 +1,314 @@
+<div class="card border-0 shadow-sm">
+  <div class="card-header bg-white">
+    <h5 class="mb-0">
+      {{ isEditMode ? "Редактирование товара" : "Создание нового товара" }}
+    </h5>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="row mb-4">
+        <div class="col-md-8">
+          <!-- Основная информация -->
+          <div class="mb-4">
+            <h6 class="mb-3 border-bottom pb-2">Основная информация</h6>
+
+            <div class="mb-3">
+              <label class="form-label">Название товара *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                [class.is-invalid]="
+                  productForm.get('name')?.invalid &&
+                  productForm.get('name')?.touched
+                "
+              />
+              <div
+                *ngIf="productForm.get('name')?.hasError('required')"
+                class="invalid-feedback"
+              >
+                Название обязательно
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Описание *</label>
+              <textarea
+                class="form-control"
+                rows="4"
+                formControlName="description"
+                [class.is-invalid]="
+                  productForm.get('description')?.invalid &&
+                  productForm.get('description')?.touched
+                "
+              ></textarea>
+              <div
+                *ngIf="productForm.get('description')?.hasError('required')"
+                class="invalid-feedback"
+              >
+                Описание обязательно
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Артикул (SKU)</label>
+                <input type="text" class="form-control" formControlName="sku" />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Статус</label>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    formControlName="isActive"
+                  />
+                  <label class="form-check-label">
+                    {{
+                      productForm.get("isActive")?.value
+                        ? "Активен"
+                        : "Неактивен"
+                    }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Цены и наличие -->
+          <div class="mb-4">
+            <h6 class="mb-3 border-bottom pb-2">Цены и наличие</h6>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Цена *</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    class="form-control"
+                    min="0"
+                    step="0.01"
+                    formControlName="price"
+                    [class.is-invalid]="
+                      productForm.get('price')?.invalid &&
+                      productForm.get('price')?.touched
+                    "
+                  />
+                  <span class="input-group-text">₽</span>
+                </div>
+                <div
+                  *ngIf="productForm.get('price')?.hasError('required')"
+                  class="invalid-feedback"
+                >
+                  Цена обязательна
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Старая цена</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    class="form-control"
+                    min="0"
+                    step="0.01"
+                    formControlName="oldPrice"
+                  />
+                  <span class="input-group-text">₽</span>
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Остаток *</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  min="0"
+                  formControlName="stockQuantity"
+                  [class.is-invalid]="
+                    productForm.get('stockQuantity')?.invalid &&
+                    productForm.get('stockQuantity')?.touched
+                  "
+                />
+                <div
+                  *ngIf="productForm.get('stockQuantity')?.hasError('required')"
+                  class="invalid-feedback"
+                >
+                  Остаток обязателен
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Характеристики -->
+          <div class="mb-4">
+            <h6 class="mb-3 border-bottom pb-2">Характеристики</h6>
+
+            <div class="row" formGroupName="specifications">
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Вес (г)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  min="0"
+                  formControlName="weight"
+                />
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Размеры</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="ДхШхВ"
+                  formControlName="dimensions"
+                />
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Материал</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="material"
+                />
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <label class="form-label">Цвет</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="color"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <!-- Изображение -->
+          <div class="mb-4">
+            <h6 class="mb-3 border-bottom pb-2">Изображение</h6>
+
+            <div class="mb-3 text-center">
+              <img
+                [src]="
+                  productForm.get('imageUrl')?.value ||
+                  'assets/product-placeholder.jpg'
+                "
+                class="img-fluid rounded border mb-3"
+                style="max-height: 300px"
+              />
+
+              <div class="mb-3">
+                <label class="form-label">URL изображения *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="imageUrl"
+                  [class.is-invalid]="
+                    productForm.get('imageUrl')?.invalid &&
+                    productForm.get('imageUrl')?.touched
+                  "
+                />
+                <div class="form-text">
+                  Поддерживаются ссылки на внешние ресурсы
+                </div>
+                <div
+                  *ngIf="productForm.get('imageUrl')?.hasError('required')"
+                  class="invalid-feedback"
+                >
+                  Изображение обязательно
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Категория и производитель -->
+          <div class="mb-4">
+            <h6 class="mb-3 border-bottom pb-2">Категория и производитель</h6>
+
+            <div class="mb-3">
+              <label class="form-label">Категория *</label>
+              <select
+                class="form-select"
+                formControlName="categoryId"
+                [class.is-invalid]="
+                  productForm.get('categoryId')?.invalid &&
+                  productForm.get('categoryId')?.touched
+                "
+              >
+                <option value="">Выберите категорию</option>
+                <option
+                  *ngFor="let category of categories"
+                  [value]="category.id"
+                >
+                  {{ category.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="productForm.get('categoryId')?.hasError('required')"
+                class="invalid-feedback"
+              >
+                Категория обязательна
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Производитель *</label>
+              <select
+                class="form-select"
+                formControlName="manufacturerId"
+                [class.is-invalid]="
+                  productForm.get('manufacturerId')?.invalid &&
+                  productForm.get('manufacturerId')?.touched
+                "
+              >
+                <option value="">Выберите производителя</option>
+                <option
+                  *ngFor="let manufacturer of manufacturers"
+                  [value]="manufacturer.id"
+                >
+                  {{ manufacturer.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="productForm.get('manufacturerId')?.hasError('required')"
+                class="invalid-feedback"
+              >
+                Производитель обязателен
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ошибка формы -->
+      <div *ngIf="formError" class="alert alert-danger mb-4">
+        {{ formError }}
+      </div>
+
+      <!-- Кнопки -->
+      <div class="d-flex justify-content-end gap-2">
+        <a routerLink="/admin/products" class="btn btn-outline-secondary">
+          Отменить
+        </a>
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+          <span *ngIf="!isLoading">
+            {{ isEditMode ? "Обновить товар" : "Создать товар" }}
+          </span>
+          <span *ngIf="isLoading">
+            <span
+              class="spinner-border spinner-border-sm"
+              aria-hidden="true"
+            ></span>
+            Сохранение...
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

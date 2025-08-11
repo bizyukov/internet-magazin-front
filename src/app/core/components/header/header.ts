@@ -2,10 +2,11 @@ import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Auth } from '../../../auth/services/auth';
+import { AuthService } from '../../../auth/services/auth';
 import { CartService } from '../../services/cart';
 
 @Component({
+  standalone: true,
   selector: 'app-header',
   imports: [AsyncPipe, FormsModule, RouterModule],
   templateUrl: './header.html',
@@ -17,7 +18,10 @@ export class Header {
   cartCount = 0;
   wishlistCount = 0;
 
-  constructor(private cartService: CartService, public authService: Auth) {
+  constructor(
+    private cartService: CartService,
+    public authService: AuthService
+  ) {
     this.cartService.cart$.subscribe((cart) => {
       this.cartCount = cart.items.length;
     });

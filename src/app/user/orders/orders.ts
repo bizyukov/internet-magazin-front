@@ -1,8 +1,9 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrderService } from '../../core/services/order';
+import { map } from 'rxjs';
 import { getOrderStatusText } from '../../core/models/order.model';
+import { OrderService } from '../../core/services/order';
 
 @Component({
   selector: 'app-orders',
@@ -12,7 +13,7 @@ import { getOrderStatusText } from '../../core/models/order.model';
 })
 export class Orders {
   private orderService = inject(OrderService);
-  orders$ = this.orderService.getOrders('');
+  orders$ = this.orderService.getOrders(1).pipe(map((data) => data.items));
   getOrderStatusText = getOrderStatusText;
 
   constructor(private router: Router) {}

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Auth } from '../../../auth/services/auth';
+import { AuthService } from '../../../auth/services/auth';
 import { CartService } from '../../../core/services/cart';
 import { WishlistService } from '../../../core/services/wishlist';
 
@@ -16,7 +16,7 @@ export class UserLayout {
   wishlistCount = 0;
 
   constructor(
-    private authService: Auth,
+    private authService: AuthService,
     private cartService: CartService,
     private wishlistService: WishlistService
   ) {

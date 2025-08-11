@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { BootstrapInput } from '../../shared/components/bootstrap-input/bootstrap-input';
-import { Auth } from '../services/auth';
+import { AuthService } from '../services/auth';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,7 +22,7 @@ export class ForgotPassword {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private authService: Auth, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
     if (this.forgotForm.invalid) return;

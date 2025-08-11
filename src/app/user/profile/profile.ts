@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Auth } from '../../auth/services/auth';
-import { User } from '../../core/services/user';
+import { AuthService } from '../../auth/services/auth';
+import { UserService } from '../../core/services/user';
 import { BootstrapInput } from '../../shared/components/bootstrap-input/bootstrap-input';
 
 @Component({
@@ -32,7 +32,10 @@ export class Profile {
   passwordSuccess = '';
   passwordError = '';
 
-  constructor(private userService: User, private authService: Auth) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.loadProfile();
@@ -55,7 +58,7 @@ export class Profile {
         this.profileSuccess = 'Профиль успешно обновлен';
         this.isLoading = false;
       },
-      error: (err) => {
+      error: () => {
         this.profileError = 'Ошибка обновления профиля';
         this.isLoading = false;
       },
@@ -76,7 +79,7 @@ export class Profile {
         this.passwordForm.reset();
         this.isPasswordLoading = false;
       },
-      error: (err) => {
+      error: () => {
         this.passwordError = 'Неверный текущий пароль';
         this.isPasswordLoading = false;
       },
