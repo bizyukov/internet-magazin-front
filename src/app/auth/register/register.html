@@ -13,7 +13,7 @@
         controlName="name"
         placeholder="Иван Иванов"
         [errors]="name?.errors"
-        [showErrors]="name?.touched"
+        [showErrors]="!!name?.touched"
       ></app-bootstrap-input>
 
       <!-- Email -->
@@ -23,7 +23,7 @@
         controlName="email"
         placeholder="example@mail.ru"
         [errors]="email?.errors"
-        [showErrors]="email?.touched"
+        [showErrors]="!!email?.touched"
       ></app-bootstrap-input>
 
       <!-- Password -->
@@ -33,7 +33,7 @@
         controlName="password"
         placeholder="••••••••"
         [errors]="password?.errors"
-        [showErrors]="password?.touched"
+        [showErrors]="!!password?.touched"
       >
         <div class="mt-2">
           <app-password-strength-meter
@@ -49,7 +49,7 @@
         controlName="confirmPassword"
         placeholder="••••••••"
         [errors]="confirmPassword?.errors"
-        [showErrors]="confirmPassword?.touched"
+        [showErrors]="!!confirmPassword?.touched"
       ></app-bootstrap-input>
 
       <!-- Password match error -->

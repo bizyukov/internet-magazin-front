@@ -1,0 +1,118 @@
+<div class="card">
+  <div class="card-header bg-white">
+    <h4 class="mb-0">Профиль пользователя</h4>
+  </div>
+
+  <div class="card-body">
+    <!-- Основная информация -->
+    <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <app-bootstrap-input
+            label="Имя"
+            type="text"
+            controlName="name"
+            placeholder="Введите ваше имя"
+          ></app-bootstrap-input>
+        </div>
+
+        <div class="col-md-6">
+          <app-bootstrap-input
+            label="Email"
+            type="email"
+            controlName="email"
+            placeholder="example@mail.ru"
+          ></app-bootstrap-input>
+        </div>
+
+        <div class="col-md-6">
+          <app-bootstrap-input
+            label="Телефон"
+            type="tel"
+            controlName="phone"
+            placeholder="+7XXXXXXXXXX"
+          ></app-bootstrap-input>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Сохранить изменения</span>
+          <span *ngIf="isLoading">
+            <span
+              class="spinner-border spinner-border-sm"
+              aria-hidden="true"
+            ></span>
+            Сохранение...
+          </span>
+        </button>
+      </div>
+
+      <div *ngIf="profileSuccess" class="alert alert-success mt-3">
+        {{ profileSuccess }}
+      </div>
+      <div *ngIf="profileError" class="alert alert-danger mt-3">
+        {{ profileError }}
+      </div>
+    </form>
+
+    <hr class="my-5" />
+
+    <!-- Смена пароля -->
+    <h5 class="mb-4">Смена пароля</h5>
+    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <app-bootstrap-input
+            label="Текущий пароль"
+            type="password"
+            controlName="currentPassword"
+            placeholder="Введите текущий пароль"
+          ></app-bootstrap-input>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <app-bootstrap-input
+            label="Новый пароль"
+            type="password"
+            controlName="newPassword"
+            placeholder="Введите новый пароль"
+          ></app-bootstrap-input>
+        </div>
+
+        <div class="col-md-6">
+          <app-bootstrap-input
+            label="Подтвердите пароль"
+            type="password"
+            controlName="confirmPassword"
+            placeholder="Повторите новый пароль"
+          ></app-bootstrap-input>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button
+          class="btn btn-outline-primary"
+          type="submit"
+          [disabled]="isPasswordLoading"
+        >
+          <span *ngIf="!isPasswordLoading">Изменить пароль</span>
+          <span *ngIf="isPasswordLoading">
+            <span
+              class="spinner-border spinner-border-sm"
+              aria-hidden="true"
+            ></span>
+            Изменение...
+          </span>
+        </button>
+      </div>
+
+      <div *ngIf="passwordSuccess" class="alert alert-success mt-3">
+        {{ passwordSuccess }}
+      </div>
+      <div *ngIf="passwordError" class="alert alert-danger mt-3">
+        {{ passwordError }}
+      </div>
+    </form>
+  </div>
+</div>

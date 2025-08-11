@@ -1,0 +1,42 @@
+<div class="card">
+  @let wishlistItems = wishlistItems$ | async;
+  <div
+    class="card-header bg-white d-flex justify-content-between align-items-center"
+  >
+    <h4 class="mb-0">Избранные товары</h4>
+    <span class="badge bg-primary rounded-pill">
+      {{ wishlistItems?.length || 0 }} товаров
+    </span>
+  </div>
+
+  <div class="card-body">
+    @if(wishlistItems?.length === 0){
+    <div class="text-center py-5">
+      <i class="bi bi-heart text-muted" style="font-size: 5rem"></i>
+      <h5 class="mt-3">Список избранного пуст</h5>
+      <p class="text-muted">Добавляйте товары в избранное, чтобы не потерять</p>
+      <a routerLink="/" class="btn btn-primary mt-2">Перейти в каталог</a>
+    </div>
+    } @if(wishlistItems && wishlistItems.length > 0){
+    <div class="row g-4">
+      @for(item of wishlistItems; track item.id){
+      <div class="col-md-6 col-lg-4">
+        <app-product-card [product]="item">
+          <div class="d-flex justify-content-between mt-3">
+            <button
+              class="btn btn-outline-danger"
+              (click)="removeFromWishlist(item.id)"
+            >
+              <i class="bi bi-trash"></i> Удалить
+            </button>
+            <button class="btn btn-primary" (click)="addToCart(item)">
+              <i class="bi bi-cart-plus"></i> В корзину
+            </button>
+          </div>
+        </app-product-card>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>

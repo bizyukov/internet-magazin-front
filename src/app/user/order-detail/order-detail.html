@@ -1,0 +1,138 @@
+@let order = order$ | async; @if(order){
+<div class="card">
+  <div
+    class="card-header bg-white d-flex justify-content-between align-items-center"
+  >
+    <div>
+      <h4 class="mb-0">Заказ #{{ order.id }}</h4>
+      <small class="text-muted"
+        >от {{ order.date | date : "dd.MM.yyyy HH:mm" }}</small
+      >
+    </div>
+    <span
+      class="badge"
+      [ngClass]="'bg-' + (order.status === 'cancelled' ? 'danger' : 'success')"
+    >
+      {{ getStatusText(order.status) }}
+    </span>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-8">
+        <h5 class="mb-3">Товары в заказе</h5>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Товар</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Итого</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of order.items">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <img
+                      [src]="item.imageUrl"
+                      alt="{{ item.name }}"
+                      width="60"
+                      class="me-3"
+                    />
+                    <div>
+                      <h6 class="mb-0">{{ item.name }}</h6>
+                      <small class="text-muted"
+                        >Артикул: {{ item.productId }}</small
+                      >
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {{ item.price | currency : "RUB" : "symbol" : "1.2-2" }}
+                </td>
+                <td>{{ item.quantity }}</td>
+                <td>
+                  {{
+                    item.price * item.quantity
+                      | currency : "RUB" : "symbol" : "1.2-2"
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card border-0 bg-light">
+          <div class="card-body">
+            <h5 class="mb-4">Информация о заказе</h5>
+
+            <div class="mb-4">
+              <h6>Адрес доставки</h6>
+              <p>
+                {{ order.shippingAddress.street }},
+                {{ order.shippingAddress.city }}<br />
+                {{ order.shippingAddress.zipCode }}
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <h6>Способ оплаты</h6>
+              <p>{{ order.paymentMethod }}</p>
+            </div>
+
+            <div class="mb-4">
+              <h6>Статус доставки</h6>
+              @if(order.trackingNumber){
+              <p>
+                Трек-номер: {{ order.trackingNumber }}<br />
+                <a href="#" class="text-primary">Отследить посылку</a>
+              </p>
+              } @if(!order.trackingNumber){
+              <p>Информация появится позже</p>
+              }
+            </div>
+
+            <div class="border-top pt-3">
+              <div class="d-flex justify-content-between mb-2">
+                <span>Сумма товаров:</span>
+                <span>{{
+                  order.subtotal | currency : "RUB" : "symbol" : "1.2-2"
+                }}</span>
+              </div>
+
+              <div class="d-flex justify-content-between mb-2">
+                <span>Доставка:</span>
+                <span>{{
+                  order.shippingCost | currency : "RUB" : "symbol" : "1.2-2"
+                }}</span>
+              </div>
+
+              @if(order.discount > 0){
+              <div class="d-flex justify-content-between mb-2 text-success">
+                <span>Скидка:</span>
+                <span
+                  >-{{
+                    order.discount | currency : "RUB" : "symbol" : "1.2-2"
+                  }}</span
+                >
+              </div>
+              }
+
+              <div class="d-flex justify-content-between fw-bold fs-5 mt-2">
+                <span>Итого:</span>
+                <span>{{
+                  order.total | currency : "RUB" : "symbol" : "1.2-2"
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}

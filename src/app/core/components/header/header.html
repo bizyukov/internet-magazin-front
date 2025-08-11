@@ -59,8 +59,10 @@
           </li>
           } @else {
           <li>
-            <a class="dropdown-item" routerLink="/auth/login">Войти</a>
-            <a class="dropdown-item" routerLink="/auth/register">Регистрация</a>
+            <a class="dropdown-item" [routerLink]="['/login']">Войти</a>
+            <a class="dropdown-item" [routerLink]="['/register']"
+              >Регистрация</a
+            >
           </li>
           }
         </ul>

@@ -1,12 +1,13 @@
 import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { Auth } from '../../../auth/services/auth';
 import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-header',
-  imports: [AsyncPipe, FormsModule],
+  imports: [AsyncPipe, FormsModule, RouterModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })

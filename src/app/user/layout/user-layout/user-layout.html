@@ -1,0 +1,78 @@
+<div class="user-layout">
+  <div class="container py-5">
+    <div class="row">
+      <!-- Боковое меню -->
+      <div class="col-md-3 mb-4">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Личный кабинет</h5>
+          </div>
+          <div class="list-group list-group-flush">
+            <a
+              class="list-group-item list-group-item-action"
+              routerLink="/user/profile"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-person me-2"></i>Профиль
+            </a>
+            <a
+              class="list-group-item list-group-item-action"
+              routerLink="/user/addresses"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-geo-alt me-2"></i>Адреса доставки
+            </a>
+            <a
+              class="list-group-item list-group-item-action"
+              routerLink="/user/payment-methods"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-credit-card me-2"></i>Способы оплаты
+            </a>
+            <a
+              class="list-group-item list-group-item-action"
+              routerLink="/user/wishlist"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-heart me-2"></i>Избранное
+              <span
+                *ngIf="wishlistCount > 0"
+                class="badge bg-primary float-end"
+              >
+                {{ wishlistCount }}
+              </span>
+            </a>
+            <a
+              class="list-group-item list-group-item-action"
+              routerLink="/user/cart"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-cart me-2"></i>Корзина
+              <span *ngIf="cartCount > 0" class="badge bg-primary float-end">
+                {{ cartCount }}
+              </span>
+            </a>
+            <a
+              class="list-group-item list-group-item-action"
+              routerLink="/user/orders"
+              routerLinkActive="active"
+            >
+              <i class="bi bi-receipt me-2"></i>Мои заказы
+            </a>
+            <a
+              class="list-group-item list-group-item-action text-danger"
+              (click)="logout()"
+            >
+              <i class="bi bi-box-arrow-right me-2"></i>Выйти
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Основной контент -->
+      <div class="col-md-9">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

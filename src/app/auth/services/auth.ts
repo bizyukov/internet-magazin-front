@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class Auth {
+export class AuthService {
   private apiUrl = 'http://localhost:3000/auth';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();

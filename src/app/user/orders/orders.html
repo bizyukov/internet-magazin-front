@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card-header bg-white">
+    <h4 class="mb-0">История заказов</h4>
+  </div>
+
+  <div class="card-body">
+    @let orders = orders$ | async; @if(orders?.length === 0){
+    <div class="text-center py-5">
+      <i class="bi bi-receipt text-muted" style="font-size: 5rem"></i>
+      <h5 class="mt-3">У вас пока нет заказов</h5>
+      <p class="text-muted">Начните делать покупки в нашем магазине</p>
+      <a routerLink="/" class="btn btn-primary mt-2">Перейти в каталог</a>
+    </div>
+    } @if(orders && orders.length > 0){
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Номер заказа</th>
+            <th>Дата</th>
+            <th>Сумма</th>
+            <th>Статус</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(order of orders; track order.id){
+          <tr>
+            <td>#{{ order.id }}</td>
+            <td>{{ order.date | date : "dd.MM.yyyy" }}</td>
+            <td>{{ order.total | currency : "RUB" : "symbol" : "1.2-2" }}</td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="'bg-' + getStatusBadge(order.status)"
+              >
+                {{ getOrderStatusText(order.status) }}
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-sm btn-outline-primary me-2"
+                (click)="viewOrderDetails(order.id)"
+              >
+                <i class="bi bi-eye"></i> Подробнее
+              </button>
+              <button
+                class="btn btn-sm btn-outline-success"
+                (click)="repeatOrder(order.id)"
+              >
+                <i class="bi bi-arrow-repeat"></i> Повторить
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+  </div>
+</div>

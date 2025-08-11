@@ -23,6 +23,10 @@ export class CartService {
     this.loadCartFromStorage();
   }
 
+  getCurrentCart(): Cart {
+    return this.cartSubject.value;
+  }
+
   private loadCartFromStorage() {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
