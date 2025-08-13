@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { BootstrapInput } from '../../shared/components/bootstrap-input/bootstrap-input';
-import { PasswordStrengthMeter } from '../../shared/components/password-strength-meter/password-strength-meter';
 import { AuthService } from '../services/auth';
 
 @Component({
@@ -13,8 +11,8 @@ import { AuthService } from '../services/auth';
     CommonModule,
     ReactiveFormsModule,
     RouterLink,
-    BootstrapInput,
-    PasswordStrengthMeter,
+    //BootstrapInput,
+    //PasswordStrengthMeter,
   ],
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],
@@ -23,7 +21,7 @@ export class Login {
   private fb = inject(FormBuilder);
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
+    password: ['', [Validators.required, Validators.minLength(4)]],
     rememberMe: [false],
   });
 

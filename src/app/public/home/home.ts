@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, map } from 'rxjs';
 import { Category } from '../../core/models/category.model';
 import { Product } from '../../core/models/product.model';
 import { ProductService } from '../../core/services/product';
@@ -28,10 +28,12 @@ export class Home {
   async loadData() {
     try {
       this.featuredProducts = await lastValueFrom(
-        this.productService.getFeaturedProducts(6)
+        this.productService
+          .getFeaturedProducts(6)
+          .pipe(map((data) => data.items))
       );
       this.newArrivals = await lastValueFrom(
-        this.productService.getNewArrivals(4)
+        this.productService.getNewArrivals(4).pipe(map((data) => data.items))
       );
 
       this.categories = await lastValueFrom(

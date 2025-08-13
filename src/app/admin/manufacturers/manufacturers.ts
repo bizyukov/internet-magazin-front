@@ -27,7 +27,7 @@ export class Manufacturers {
     this.manufacturerService
       .getAllManufacturers()
       .subscribe((manufacturers) => {
-        this.manufacturers = manufacturers;
+        this.manufacturers = manufacturers.items;
       });
   }
 

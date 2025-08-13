@@ -7,30 +7,37 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <!-- Email -->
-      <app-bootstrap-input
-        label="Email"
-        type="email"
-        controlName="email"
-        placeholder="example@mail.ru"
-        [errors]="email?.errors"
-        [showErrors]="!!email?.touched"
-      ></app-bootstrap-input>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          placeholder="example@mail.ru"
+        />
+        <!-- @if(registerForm.get('email')?.invalid &&
+        registerForm.get('email')?.touched){
+        <div class="text-danger small">Введите корректный email</div>
+        } -->
+      </div>
 
       <!-- Password -->
-      <app-bootstrap-input
-        label="Пароль"
-        type="password"
-        controlName="password"
-        placeholder="••••••••"
-        [errors]="password?.errors"
-        [showErrors]="!!password?.touched"
-      >
-        <div class="mt-2">
+      <div class="mb-3">
+        <label for="password" class="form-label">Пароль</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          formControlName="password"
+          placeholder="********"
+        />
+        <!-- <div class="mt-2">
           <app-password-strength-meter
-            [password]="password?.value || ''"
+            [password]="registerForm.get('password')?.value || ''"
           ></app-password-strength-meter>
-        </div>
-      </app-bootstrap-input>
+        </div> -->
+      </div>
 
       <!-- Remember me & Forgot password -->
       <div class="d-flex justify-content-between mb-4">
@@ -46,7 +53,10 @@
           </label>
         </div>
 
-        <a routerLink="/auth/forgot-password" class="text-decoration-none">
+        <a
+          [routerLink]="['/auth/forgot-password']"
+          class="text-decoration-none"
+        >
           Забыли пароль?
         </a>
       </div>
@@ -57,26 +67,34 @@
         type="submit"
         [disabled]="isLoading"
       >
-        <span *ngIf="!isLoading">Войти</span>
-        <span *ngIf="isLoading">
+        @if(!isLoading){
+        <span>Войти</span>
+        } @if(isLoading){
+        <span>
           <span
             class="spinner-border spinner-border-sm"
             aria-hidden="true"
           ></span>
           <span role="status">Загрузка...</span>
         </span>
+        }
       </button>
 
       <!-- Error message -->
-      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      @if(errorMessage){
+      <div class="alert alert-danger mt-3">
         {{ errorMessage }}
       </div>
+      }
     </form>
 
     <div class="text-center mt-4">
       <p class="mb-0">
         Еще нет аккаунта?
-        <a routerLink="/auth/register" class="text-decoration-none fw-medium">
+        <a
+          [routerLink]="['/auth/register']"
+          class="text-decoration-none fw-medium"
+        >
           Зарегистрироваться
         </a>
       </p>

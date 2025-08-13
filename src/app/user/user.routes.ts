@@ -9,7 +9,7 @@ import { OrderDetail } from './order-detail/order-detail';
 
 export const USER_ROUTES: Routes = [
   {
-    path: '',
+    path: 'user',
     component: UserLayout,
     canActivate: [AuthGuard],
     children: [

@@ -16,22 +16,26 @@
         (click)="addManufacturer()"
         [disabled]="!newManufacturerName.trim() || isAdding"
       >
-        <span *ngIf="!isAdding">Добавить</span>
-        <span *ngIf="isAdding">
+        @if(!isAdding){
+        <span>Добавить</span>
+        } @if(isAdding){
+        <span>
           <span class="spinner-border spinner-border-sm"></span>
         </span>
+        }
       </button>
     </div>
   </div>
 
   <div class="card-body">
-    <div *ngIf="manufacturers.length === 0" class="text-center py-5">
+    @if(manufacturers.length === 0){
+    <div class="text-center py-5">
       <i class="bi bi-building text-muted" style="font-size: 5rem"></i>
       <h5 class="mt-3">Производители не найдены</h5>
       <p class="text-muted">Добавьте производителей для ваших товаров</p>
     </div>
-
-    <div *ngIf="manufacturers.length > 0" class="table-responsive">
+    } @if(manufacturers.length > 0){
+    <div class="table-responsive">
       <table class="table table-hover">
         <thead>
           <tr>
@@ -42,20 +46,22 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let manufacturer of manufacturers">
+          @for(manufacturer of manufacturers; track manufacturer.id){
+          <tr>
             <td>{{ manufacturer.id }}</td>
             <td>
-              <div *ngIf="editId !== manufacturer.id; else editMode">
+              @if(editId !== manufacturer.id){
+              <div>
                 {{ manufacturer.name }}
               </div>
-              <ng-template #editMode>
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="editName"
-                  (keyup.enter)="saveEdit(manufacturer.id)"
-                />
-              </ng-template>
+              } @else {
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="editName"
+                (keyup.enter)="saveEdit(manufacturer.id)"
+              />
+              }
             </td>
             <td>{{ manufacturer.productCount || 0 }}</td>
             <td>
@@ -89,8 +95,10 @@
               </div>
             </td>
           </tr>
+          }
         </tbody>
       </table>
     </div>
+    }
   </div>
 </div>

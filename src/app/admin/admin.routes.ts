@@ -1,4 +1,3 @@
-// admin.routes.ts
 import { Routes } from '@angular/router';
 import { AdminAuthGuard } from '../core/guards/admin-auth-guard';
 import { Categories } from './categories/categories';
@@ -12,7 +11,7 @@ import { Users } from './users/users';
 
 export const ADMIN_ROUTES: Routes = [
   {
-    path: '',
+    path: 'admin',
     component: AdminLayout,
     canActivate: [AdminAuthGuard],
     children: [

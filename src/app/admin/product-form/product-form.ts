@@ -1,7 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Category } from '../../core/models/category.model';
 import { Manufacturer } from '../../core/models/manufacturer.model';
 import { Product } from '../../core/models/product.model';
@@ -11,7 +10,7 @@ import { ProductService } from '../../core/services/product';
 
 @Component({
   selector: 'app-product-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './product-form.html',
   styleUrl: './product-form.scss',
 })
@@ -73,7 +72,7 @@ export class ProductForm implements OnInit {
     this.manufacturerService
       .getAllManufacturers()
       .subscribe((manufacturers) => {
-        this.manufacturers = manufacturers;
+        this.manufacturers = manufacturers.items;
       });
   }
 

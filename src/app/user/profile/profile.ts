@@ -3,11 +3,16 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/services/auth';
 import { UserService } from '../../core/services/user';
-import { BootstrapInput } from '../../shared/components/bootstrap-input/bootstrap-input';
+import { PasswordStrengthMeter } from '../../shared/components/password-strength-meter/password-strength-meter';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, ReactiveFormsModule, BootstrapInput],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    //BootstrapInput,
+    PasswordStrengthMeter,
+  ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
@@ -31,6 +36,7 @@ export class Profile {
   profileError = '';
   passwordSuccess = '';
   passwordError = '';
+  passwordStrength = 0;
 
   constructor(
     private userService: UserService,
@@ -84,5 +90,15 @@ export class Profile {
         this.isPasswordLoading = false;
       },
     });
+  }
+
+  checkPasswordStrength() {
+    const password = this.passwordForm.get('newPassword')?.value || '';
+    let strength = 0;
+    if (password.length >= 8) strength += 25;
+    if (/[A-Z]/.test(password)) strength += 25;
+    if (/[0-9]/.test(password)) strength += 25;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+    this.passwordStrength = strength;
   }
 }

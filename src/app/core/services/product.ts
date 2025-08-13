@@ -9,7 +9,7 @@ import { Product } from '../models/product.model';
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private readonly API_URL = 'http://localhost:3000/';
-  private adminBaseUrl = 'http://localhost:3000/admin/products';
+  private adminBaseUrl = 'http://localhost:3000/admin/products/';
 
   constructor(private http: HttpClient) {}
 
@@ -32,7 +32,7 @@ export class ProductService {
   }
 
   deleteProduct(productId: number): Observable<void> {
-    return this.http.delete<void>(`${this.adminBaseUrl}/${productId}`);
+    return this.http.delete<void>(`${this.adminBaseUrl}${productId}`);
   }
 
   createProduct(productData: Partial<Product>): Observable<Product> {
@@ -44,34 +44,40 @@ export class ProductService {
     productData: Partial<Product>
   ): Observable<Product> {
     return this.http.put<Product>(
-      `${this.adminBaseUrl}/${productId}`,
+      `${this.adminBaseUrl}${productId}`,
       productData
     );
   }
 
   getProductById(productId: number): Observable<Product> {
-    return this.http.get<Product>(`${this.adminBaseUrl}/${productId}`);
+    return this.http.get<Product>(`${this.adminBaseUrl}${productId}`);
   }
 
-  getFeaturedProducts(limit: number): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.API_URL}/products`, {
-      params: {
-        featured: 'true',
-        _limit: limit.toString(),
-      },
-    });
+  getFeaturedProducts(limit: number): Observable<PaginatedResponse<Product>> {
+    return this.http.get<PaginatedResponse<Product>>(
+      `${this.API_URL}products`,
+      {
+        params: {
+          featured: 'true',
+          _limit: limit.toString(),
+        },
+      }
+    );
   }
 
-  getNewArrivals(limit: number): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.API_URL}/products`, {
-      params: {
-        sort: 'createdAt:DESC',
-        _limit: limit.toString(),
-      },
-    });
+  getNewArrivals(limit: number): Observable<PaginatedResponse<Product>> {
+    return this.http.get<PaginatedResponse<Product>>(
+      `${this.API_URL}products`,
+      {
+        params: {
+          sort: 'createdAt:DESC',
+          _limit: limit.toString(),
+        },
+      }
+    );
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.API_URL}/categories`);
+    return this.http.get<Category[]>(`${this.API_URL}categories`);
   }
 }

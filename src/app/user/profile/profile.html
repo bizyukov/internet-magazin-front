@@ -7,31 +7,69 @@
     <!-- Основная информация -->
     <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
       <div class="row mb-4">
+        <div class="mb-3"></div>
+
         <div class="col-md-6">
-          <app-bootstrap-input
+          <label for="name" class="form-label">Имя</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            formControlName="name"
+            placeholder="Иван Иванов"
+          />
+          @if(profileForm.get('name')?.invalid &&
+          profileForm.get('name')?.touched){
+          <div class="text-danger small">Имя обязательно (мин. 2 символа)</div>
+          }
+          <!-- <app-bootstrap-input
             label="Имя"
             type="text"
             controlName="name"
             placeholder="Введите ваше имя"
-          ></app-bootstrap-input>
+          ></app-bootstrap-input> -->
         </div>
 
         <div class="col-md-6">
-          <app-bootstrap-input
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            formControlName="email"
+            placeholder="example@mail.ru"
+          />
+          @if(profileForm.get('email')?.invalid &&
+          profileForm.get('email')?.touched){
+          <div class="text-danger small">Введите корректный email</div>
+          }
+          <!-- <app-bootstrap-input
             label="Email"
             type="email"
             controlName="email"
             placeholder="example@mail.ru"
-          ></app-bootstrap-input>
+          ></app-bootstrap-input> -->
         </div>
 
         <div class="col-md-6">
-          <app-bootstrap-input
+          <label for="phone" class="form-label">Телефон</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="phone"
+            formControlName="phone"
+            placeholder="+7XXXXXXXXXX"
+          />
+          @if(profileForm.get('phone')?.invalid &&
+          profileForm.get('phone')?.touched){
+          <div class="text-danger small">Введите корректный телефон</div>
+          }
+          <!-- <app-bootstrap-input
             label="Телефон"
             type="tel"
             controlName="phone"
             placeholder="+7XXXXXXXXXX"
-          ></app-bootstrap-input>
+          ></app-bootstrap-input> -->
         </div>
       </div>
 
@@ -63,30 +101,47 @@
     <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
       <div class="row">
         <div class="col-md-6 mb-3">
-          <app-bootstrap-input
-            label="Текущий пароль"
+          <label for="password" class="form-label">Текущий пароль</label>
+          <input
             type="password"
-            controlName="currentPassword"
+            class="form-control"
+            id="currentPassword"
+            formControlName="currentPassword"
             placeholder="Введите текущий пароль"
-          ></app-bootstrap-input>
+          />
         </div>
 
         <div class="col-md-6 mb-3">
-          <app-bootstrap-input
-            label="Новый пароль"
+          <label for="newPassword" class="form-label">Пароль</label>
+          <input
             type="password"
-            controlName="newPassword"
+            class="form-control"
+            id="newPassword"
+            formControlName="newPassword"
+            (input)="checkPasswordStrength()"
             placeholder="Введите новый пароль"
-          ></app-bootstrap-input>
+          />
+          <div class="mt-2">
+            <app-password-strength-meter
+              [password]="passwordForm.get('newPassword')?.value || ''"
+            ></app-password-strength-meter>
+          </div>
         </div>
 
         <div class="col-md-6">
-          <app-bootstrap-input
-            label="Подтвердите пароль"
+          <label for="confirmPassword" class="form-label">Пароль</label>
+          <input
             type="password"
-            controlName="confirmPassword"
+            class="form-control"
+            id="confirmPassword"
+            formControlName="confirmPassword"
             placeholder="Повторите новый пароль"
-          ></app-bootstrap-input>
+          />
+
+          @if(passwordForm.get('confirmPassword')?.invalid &&
+          passwordForm.get('confirmPassword')?.touched){
+          <div class="text-danger small">Подтвердите пароль</div>
+          }
         </div>
       </div>
 

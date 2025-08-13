@@ -1,101 +1,107 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <div class="text-center mb-4">
-      <h2 class="auth-title">Создать аккаунт</h2>
-      <p class="text-muted">Заполните информацию для регистрации</p>
-    </div>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">Регистрация</h2>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="name" class="form-label">Имя</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name"
+                placeholder="Иван Иванов"
+              />
+              @if(registerForm.get('name')?.invalid &&
+              registerForm.get('name')?.touched){
+              <div class="text-danger small">
+                Имя обязательно (мин. 2 символа)
+              </div>
+              }
+            </div>
 
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <!-- Name -->
-      <app-bootstrap-input
-        label="Имя"
-        type="text"
-        controlName="name"
-        placeholder="Иван Иванов"
-        [errors]="name?.errors"
-        [showErrors]="!!name?.touched"
-      ></app-bootstrap-input>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                placeholder="example@mail.ru"
+              />
+              @if(registerForm.get('email')?.invalid &&
+              registerForm.get('email')?.touched){
+              <div class="text-danger small">Введите корректный email</div>
+              }
+            </div>
 
-      <!-- Email -->
-      <app-bootstrap-input
-        label="Email"
-        type="email"
-        controlName="email"
-        placeholder="example@mail.ru"
-        [errors]="email?.errors"
-        [showErrors]="!!email?.touched"
-      ></app-bootstrap-input>
+            <div class="mb-3">
+              <label for="password" class="form-label">Пароль</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                (input)="checkPasswordStrength()"
+                placeholder="********"
+              />
+              <div class="mt-2">
+                <app-password-strength-meter
+                  [password]="registerForm.get('password')?.value || ''"
+                ></app-password-strength-meter>
+              </div>
+            </div>
 
-      <!-- Password -->
-      <app-bootstrap-input
-        label="Пароль"
-        type="password"
-        controlName="password"
-        placeholder="••••••••"
-        [errors]="password?.errors"
-        [showErrors]="!!password?.touched"
-      >
-        <div class="mt-2">
-          <app-password-strength-meter
-            [password]="password?.value || ''"
-          ></app-password-strength-meter>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label"
+                >Подтвердите пароль</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                placeholder="********"
+              />
+              @if(registerForm.get('confirmPassword')?.invalid &&
+              registerForm.get('confirmPassword')?.touched){
+              <div class="text-danger small">Подтвердите пароль</div>
+              }
+            </div>
+
+            <div class="d-grid mb-3">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="isLoading"
+              >
+                @if(!isLoading){
+                <span>Зарегистрироваться</span>
+                } @else {
+                <span>
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    aria-hidden="true"
+                  ></span>
+                  Загрузка...
+                </span>
+                }
+              </button>
+            </div>
+            @if(errorMessage){
+            <div class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            }
+          </form>
+
+          <div class="text-center">
+            <a [routerLink]="['/auth/login']">Уже есть аккаунт? Войти</a>
+          </div>
         </div>
-      </app-bootstrap-input>
-
-      <!-- Confirm Password -->
-      <app-bootstrap-input
-        label="Подтвердите пароль"
-        type="password"
-        controlName="confirmPassword"
-        placeholder="••••••••"
-        [errors]="confirmPassword?.errors"
-        [showErrors]="!!confirmPassword?.touched"
-      ></app-bootstrap-input>
-
-      <!-- Password match error -->
-      <div
-        *ngIf="
-          registerForm.hasError('passwordMismatch') && confirmPassword?.touched
-        "
-        class="alert alert-danger mt-2"
-      >
-        Пароли не совпадают
       </div>
-
-      <!-- Submit button -->
-      <button
-        class="btn btn-primary w-100 mb-3"
-        type="submit"
-        [disabled]="isLoading"
-      >
-        <span *ngIf="!isLoading">Зарегистрироваться</span>
-        <span *ngIf="isLoading">
-          <span
-            class="spinner-border spinner-border-sm"
-            aria-hidden="true"
-          ></span>
-          <span role="status">Загрузка...</span>
-        </span>
-      </button>
-
-      <!-- Success message -->
-      <div *ngIf="successMessage" class="alert alert-success mt-3">
-        {{ successMessage }}
-      </div>
-
-      <!-- Error message -->
-      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-        {{ errorMessage }}
-      </div>
-    </form>
-
-    <div class="text-center mt-4">
-      <p class="mb-0">
-        Уже есть аккаунт?
-        <a routerLink="/auth/login" class="text-decoration-none fw-medium">
-          Войти
-        </a>
-      </p>
     </div>
   </div>
 </div>

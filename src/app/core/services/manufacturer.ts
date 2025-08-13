@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Manufacturer } from '../models/manufacturer.model';
+import { PaginatedResponse } from '../models/paginated-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +15,8 @@ export class ManufacturerService {
   /**
    * Получение всех производителей
    */
-  getAllManufacturers(): Observable<Manufacturer[]> {
-    return this.http.get<Manufacturer[]>(this.apiUrl);
+  getAllManufacturers(): Observable<PaginatedResponse<Manufacturer>> {
+    return this.http.get<PaginatedResponse<Manufacturer>>(this.apiUrl);
   }
 
   /**

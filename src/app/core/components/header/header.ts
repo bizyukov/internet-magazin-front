@@ -25,6 +25,10 @@ export class Header {
     this.cartService.cart$.subscribe((cart) => {
       this.cartCount = cart.items.length;
     });
+
+   /*  this.authService.userRole$.subscribe((role) => {
+      console.log('role', role);
+    }); */
   }
 
   search() {
@@ -36,6 +40,7 @@ export class Header {
 
   logout() {
     // Заглушка для выхода
-    this.isLoggedIn = false;
+    //this.isLoggedIn = false;
+    this.authService.logout();
   }
 }

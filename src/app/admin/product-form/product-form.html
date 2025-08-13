@@ -24,12 +24,9 @@
                   productForm.get('name')?.touched
                 "
               />
-              <div
-                *ngIf="productForm.get('name')?.hasError('required')"
-                class="invalid-feedback"
-              >
-                Название обязательно
-              </div>
+              @if(productForm.get('name')?.hasError('required')){
+              <div class="invalid-feedback">Название обязательно</div>
+              }
             </div>
 
             <div class="mb-3">
@@ -43,12 +40,9 @@
                   productForm.get('description')?.touched
                 "
               ></textarea>
-              <div
-                *ngIf="productForm.get('description')?.hasError('required')"
-                class="invalid-feedback"
-              >
-                Описание обязательно
-              </div>
+              @if(productForm.get('description')?.hasError('required')){
+              <div class="invalid-feedback">Описание обязательно</div>
+              }
             </div>
 
             <div class="row">
@@ -98,12 +92,9 @@
                   />
                   <span class="input-group-text">₽</span>
                 </div>
-                <div
-                  *ngIf="productForm.get('price')?.hasError('required')"
-                  class="invalid-feedback"
-                >
-                  Цена обязательна
-                </div>
+                @if(productForm.get('price')?.hasError('required')){
+                <div class="invalid-feedback">Цена обязательна</div>
+                }
               </div>
 
               <div class="col-md-4 mb-3">
@@ -132,12 +123,9 @@
                     productForm.get('stockQuantity')?.touched
                   "
                 />
-                <div
-                  *ngIf="productForm.get('stockQuantity')?.hasError('required')"
-                  class="invalid-feedback"
-                >
-                  Остаток обязателен
-                </div>
+                @if(productForm.get('stockQuantity')?.hasError('required')){
+                <div class="invalid-feedback">Остаток обязателен</div>
+                }
               </div>
             </div>
           </div>
@@ -217,12 +205,9 @@
                 <div class="form-text">
                   Поддерживаются ссылки на внешние ресурсы
                 </div>
-                <div
-                  *ngIf="productForm.get('imageUrl')?.hasError('required')"
-                  class="invalid-feedback"
-                >
-                  Изображение обязательно
-                </div>
+                @if(productForm.get('imageUrl')?.hasError('required')){
+                <div class="invalid-feedback">Изображение обязательно</div>
+                }
               </div>
             </div>
           </div>
@@ -242,19 +227,15 @@
                 "
               >
                 <option value="">Выберите категорию</option>
-                <option
-                  *ngFor="let category of categories"
-                  [value]="category.id"
-                >
+                @for(category of categories; track category.id){
+                <option [value]="category.id">
                   {{ category.name }}
                 </option>
+                }
               </select>
-              <div
-                *ngIf="productForm.get('categoryId')?.hasError('required')"
-                class="invalid-feedback"
-              >
-                Категория обязательна
-              </div>
+              @if(productForm.get('categoryId')?.hasError('required')){
+              <div class="invalid-feedback">Категория обязательна</div>
+              }
             </div>
 
             <div class="mb-3">
@@ -268,45 +249,46 @@
                 "
               >
                 <option value="">Выберите производителя</option>
-                <option
-                  *ngFor="let manufacturer of manufacturers"
-                  [value]="manufacturer.id"
-                >
+                @for(manufacturer of manufacturers; track manufacturer.id){
+                <option [value]="manufacturer.id">
                   {{ manufacturer.name }}
                 </option>
+                }
               </select>
-              <div
-                *ngIf="productForm.get('manufacturerId')?.hasError('required')"
-                class="invalid-feedback"
-              >
-                Производитель обязателен
-              </div>
+              @if(productForm.get('manufacturerId')?.hasError('required')){
+              <div class="invalid-feedback">Производитель обязателен</div>
+              }
             </div>
           </div>
         </div>
       </div>
 
       <!-- Ошибка формы -->
-      <div *ngIf="formError" class="alert alert-danger mb-4">
+      @if(formError){
+      <div class="alert alert-danger mb-4">
         {{ formError }}
       </div>
+      }
 
       <!-- Кнопки -->
       <div class="d-flex justify-content-end gap-2">
-        <a routerLink="/admin/products" class="btn btn-outline-secondary">
+        <a [routerLink]="['/admin/products']" class="btn btn-outline-secondary">
           Отменить
         </a>
         <button type="submit" class="btn btn-primary" [disabled]="isLoading">
-          <span *ngIf="!isLoading">
+          @if(!isLoading){
+          <span>
             {{ isEditMode ? "Обновить товар" : "Создать товар" }}
           </span>
-          <span *ngIf="isLoading">
+          } @if(isLoading){
+          <span>
             <span
               class="spinner-border spinner-border-sm"
               aria-hidden="true"
             ></span>
             Сохранение...
           </span>
+          }
         </button>
       </div>
     </form>

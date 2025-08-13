@@ -1,4 +1,4 @@
-import { DatePipe, SlicePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../core/models/user.model';
@@ -6,7 +6,7 @@ import { UserService } from '../../core/services/user';
 
 @Component({
   selector: 'app-users',
-  imports: [DatePipe, SlicePipe, FormsModule],
+  imports: [DatePipe, FormsModule],
   templateUrl: './users.html',
   styleUrl: './users.scss',
 })
@@ -38,6 +38,7 @@ export class Users {
       .subscribe({
         next: (response) => {
           this.users = response.items;
+          console.log('this.users', this.users);
           this.totalItems = response.total;
           this.totalPages = response.totalPages;
           this.isLoading = false;
