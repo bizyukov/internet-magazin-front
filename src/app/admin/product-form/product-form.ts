@@ -4,9 +4,9 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Category } from '../../core/models/category.model';
 import { Manufacturer } from '../../core/models/manufacturer.model';
 import { Product } from '../../core/models/product.model';
+import { AdminProductService } from '../../core/services/admin-product';
 import { CategoryService } from '../../core/services/category';
 import { ManufacturerService } from '../../core/services/manufacturer';
-import { ProductService } from '../../core/services/product';
 
 @Component({
   selector: 'app-product-form',
@@ -45,7 +45,7 @@ export class ProductForm implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService,
+    private productService: AdminProductService,
     private categoryService: CategoryService,
     private manufacturerService: ManufacturerService
   ) {}

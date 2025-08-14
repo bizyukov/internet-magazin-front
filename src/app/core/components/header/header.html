@@ -6,7 +6,8 @@
 
     <!-- Поиск -->
     <div class="d-flex w-50 mx-4">
-      <input
+      <app-search></app-search>
+      <!-- <input
         type="text"
         class="form-control"
         placeholder="Поиск товаров..."
@@ -14,7 +15,7 @@
       />
       <button class="btn btn-light ms-2" (click)="search()">
         <i class="bi bi-search"></i>
-      </button>
+      </button> -->
     </div>
 
     <!-- Иконки действий -->
@@ -38,7 +39,7 @@
         class="text-white me-3 position-relative"
       >
         <i class="bi bi-cart3 fs-5"></i>
-        @if(wishlistCount > 0){
+        @if(cartCount > 0){
         <span
           class="badge bg-danger position-absolute top-0 start-100 translate-middle"
         >

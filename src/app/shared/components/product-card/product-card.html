@@ -1,4 +1,10 @@
-<div class="card h-100 product-card">
+<div class="card h-100 product-card" [routerLink]="['/product', product.id]">
+  @if(showCategory){
+  <div class="text-muted small mb-1">
+    {{ product.category?.name || "Без категории" }}
+  </div>
+  }
+
   <div class="position-relative">
     <img
       [src]="product.imageUrl || 'assets/product-placeholder.jpg'"
@@ -27,6 +33,12 @@
         {{ product.name }}
       </a>
     </h5>
+
+    @if(showRating){
+    <div class="d-flex align-items-center mb-2">
+      <!-- Рейтинг -->
+    </div>
+    }
 
     <div class="d-flex align-items-center mb-2">
       <div class="rating me-2">

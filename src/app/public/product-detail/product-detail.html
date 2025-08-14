@@ -1,0 +1,253 @@
+<div class="container py-5">
+  <!-- Индикатор загрузки -->
+  @if(isLoading){
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Загрузка...</span>
+    </div>
+  </div>
+  }
+
+  <!-- Ошибка -->
+  @if(error){
+  <div class="alert alert-danger">
+    {{ error }}
+  </div>
+  }
+
+  <!-- Детали товара -->
+  @if(product && !isLoading){
+  <div class="card border-0 shadow-sm">
+    <div class="row g-0">
+      <!-- Галерея изображений -->
+      <div class="col-md-6">
+        <div class="p-4">
+          <div class="mb-3 text-center" style="height: 400px">
+            <img
+              [src]="selectedImage || 'assets/product-placeholder.jpg'"
+              alt="{{ product.name }}"
+              class="img-fluid h-100 object-fit-contain"
+            />
+          </div>
+
+          <div class="d-flex gap-2 flex-wrap">
+            @for(image of product.images; track image){
+            <div
+              class="border cursor-pointer p-1"
+              [class.border-primary]="selectedImage === image"
+              (click)="selectImage(image)"
+              style="width: 80px; height: 80px"
+            >
+              <img
+                [src]="image"
+                alt="{{ product.name }}"
+                class="img-fluid h-100 w-100 object-fit-contain"
+              />
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Информация о товаре -->
+      <div class="col-md-6">
+        <div class="p-4">
+          <h1 class="h2 mb-3">{{ product.name }}</h1>
+
+          <!-- Рейтинг -->
+          <div class="d-flex align-items-center mb-3">
+            <div class="rating me-2">
+              @for(star of [1, 2, 3, 4, 5]; track star){
+              <i
+                class="bi"
+                [class.bi-star-fill]="star <= product.rating"
+                [class.bi-star]="star > product.rating"
+                [class.text-warning]="star <= product.rating"
+              ></i>
+              }
+            </div>
+            <small class="text-muted"
+              >({{ product.reviewCount }} отзывов)</small
+            >
+          </div>
+
+          <!-- Цены -->
+          <div class="mb-4">
+            <div class="d-flex align-items-center gap-3">
+              <span class="h3 text-primary mb-0">
+                {{ product.price | currency : "RUB" : "symbol" : "1.2-2" }}
+              </span>
+
+              @if(product.oldPrice){
+              <span class="text-muted text-decoration-line-through">
+                {{ product.oldPrice | currency : "RUB" : "symbol" : "1.2-2" }}
+              </span>
+              <span class="badge bg-danger">
+                -{{
+                  (1 - product.price / product.oldPrice) * 100
+                    | number : "1.0-0"
+                }}%
+              </span>
+              }
+            </div>
+          </div>
+
+          <!-- Описание -->
+          <div class="mb-4">
+            <p class="text-muted">{{ product.description }}</p>
+          </div>
+
+          <!-- Выбор количества -->
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <label class="form-label mb-0">Количество:</label>
+            <div class="input-group" style="width: 130px">
+              <button
+                class="btn btn-outline-secondary"
+                (click)="decrementQuantity()"
+              >
+                <i class="bi bi-dash"></i>
+              </button>
+              <input
+                type="number"
+                class="form-control text-center"
+                [(ngModel)]="quantity"
+                min="1"
+                max="10"
+              />
+              <button
+                class="btn btn-outline-secondary"
+                (click)="incrementQuantity()"
+              >
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+
+            <div class="text-muted small">
+              В наличии: {{ product.stockQuantity }} шт.
+            </div>
+          </div>
+
+          <!-- Кнопки действий -->
+          <div class="d-flex gap-3 mb-5">
+            @if(!cartService.isInCart(product.id)){
+            <button class="btn btn-primary flex-grow-1" (click)="addToCart()">
+              <i class="bi bi-cart-plus me-2"></i> Добавить в корзину
+            </button>
+            } @else {
+            <button class="btn btn-info flex-grow-1" [routerLink]="['/user/cart']">
+              <i class="bi bi-cart me-2"></i> В корзине
+            </button>
+            }
+
+            <button
+              class="btn btn-outline-secondary"
+              (click)="toggleWishlist()"
+              [class.text-danger]="wishlistService.isInWishlist(product.id)"
+            >
+              <i
+                class="bi"
+                [class.bi-heart-fill]="wishlistService.isInWishlist(product.id)"
+                [class.bi-heart]="!wishlistService.isInWishlist(product.id)"
+              ></i>
+            </button>
+          </div>
+
+          <!-- Характеристики -->
+          <div class="mb-4">
+            <h5 class="mb-3">Характеристики</h5>
+            <div class="row">
+              @for(spec of product.specifications; track spec){
+              <div class="col-md-6 mb-2">
+                <span class="text-muted">{{ spec.key }}:</span>
+                <span class="ms-2">{{ spec.value }}</span>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Табы с дополнительной информацией -->
+    <div class="border-top">
+      <ul class="nav nav-tabs" id="productTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="description-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#description"
+            type="button"
+            role="tab"
+          >
+            Описание
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="specifications-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#specifications"
+            type="button"
+            role="tab"
+          >
+            Характеристики
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="reviews-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#reviews"
+            type="button"
+            role="tab"
+          >
+            Отзывы ({{ product.reviewCount }})
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content p-4" id="productTabsContent">
+        <div class="tab-pane fade show active" id="description" role="tabpanel">
+          <p>{{ product.description }}</p>
+          <!-- Здесь может быть расширенное описание -->
+        </div>
+
+        <div class="tab-pane fade" id="specifications" role="tabpanel">
+          <div class="row">
+            @for(spec of product.specifications; track spec){
+            <div class="col-md-6 mb-3">
+              <div class="d-flex justify-content-between border-bottom pb-2">
+                <span class="text-muted">{{ spec.key }}:</span>
+                <span>{{ spec.value }}</span>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="reviews" role="tabpanel">
+          <!-- Компонент отзывов можно вынести в отдельный компонент -->
+          <div class="alert alert-info">Отзывы скоро будут добавлены</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Похожие товары -->
+  @if(relatedProducts.length > 0){
+  <div class="mt-5">
+    <h2 class="mb-4">Похожие товары</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+      @for(product of relatedProducts; track product.id){
+      <div class="col">
+        <app-product-card [product]="product"></app-product-card>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

@@ -1,0 +1,19 @@
+<div class="search-container position-relative">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Поиск товаров..."
+    [formControl]="searchControl"
+  />
+
+  <!-- Результаты автодополнения -->
+  @if(suggestions.length > 0){
+  <div class="autocomplete-results shadow-sm">
+    @for(suggestion of suggestions; track suggestion){
+    <div class="autocomplete-item" (click)="selectSuggestion(suggestion)">
+      {{ suggestion }}
+    </div>
+    }
+  </div>
+  }
+</div>

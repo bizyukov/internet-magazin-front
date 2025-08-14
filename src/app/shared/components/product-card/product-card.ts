@@ -12,6 +12,8 @@ import { WishlistService } from '../../../core/services/wishlist';
 })
 export class ProductCard {
   @Input() product: any;
+  @Input() showCategory: boolean = true;
+  @Input() showRating: boolean = true;
   isInWishlist = false;
 
   constructor(

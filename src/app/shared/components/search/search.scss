@@ -1,0 +1,30 @@
+:host{
+    width: 100%;
+}
+
+.search-container {
+  max-width: 500px;
+}
+
+.autocomplete-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.autocomplete-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.autocomplete-item:hover {
+  background: #f8f9fa;
+}

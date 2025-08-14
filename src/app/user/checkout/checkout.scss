@@ -1,0 +1,47 @@
+.nav-pills {
+  .nav-link {
+    position: relative;
+    border-radius: 0;
+    border-bottom: 3px solid transparent;
+    padding: 1rem;
+    color: #6c757d;
+    background-color: #f8f9fa;
+
+    &.active {
+      background-color: #f8f9fa;
+      border-bottom-color: #3f51b5;
+      color: #3f51b5;
+      font-weight: 500;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #dee2e6;
+      color: #6c757d;
+    }
+
+    &.active .step-number {
+      background-color: #3f51b5;
+      color: white;
+    }
+  }
+}
+
+.list-group-item {
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &.active {
+    background-color: rgba(63, 81, 181, 0.1);
+    border-color: rgba(63, 81, 181, 0.3);
+  }
+
+  &:hover:not(.active) {
+    background-color: #f8f9fa;
+  }
+}

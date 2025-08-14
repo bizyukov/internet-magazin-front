@@ -1,0 +1,187 @@
+<div class="container py-5">
+  <div class="row">
+    <!-- Боковая панель фильтров -->
+    <div class="col-md-3">
+      <div class="card mb-4">
+        <div
+          class="card-header bg-white d-flex justify-content-between align-items-center"
+        >
+          <h5 class="mb-0">Фильтры</h5>
+          <button class="btn btn-sm btn-link" (click)="clearFilters()">
+            Сбросить
+          </button>
+        </div>
+
+        <div class="card-body">
+          <!-- Категории -->
+          <div class="mb-4">
+            <h6 class="mb-3">Категории</h6>
+            @for(category of categories; track category.id){
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="category"
+                [id]="'category-' + category.id"
+                [value]="category.id"
+                formControlName="category"
+              />
+              <label class="form-check-label" [for]="'category-' + category.id">
+                {{ category.name }}
+                <small class="text-muted">({{ category.count }})</small>
+              </label>
+            </div>
+            }
+          </div>
+
+          <!-- Бренды -->
+          <div class="mb-4">
+            <h6 class="mb-3">Бренды</h6>
+            @for(brand of brands; track brand.id){
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="brand"
+                [id]="'brand-' + brand.id"
+                [value]="brand.id"
+                formControlName="brand"
+              />
+              <label class="form-check-label" [for]="'brand-' + brand.id">
+                {{ brand.name }}
+                <small class="text-muted">({{ brand.count }})</small>
+              </label>
+            </div>
+            }
+          </div>
+
+          <!-- Цена -->
+          <div class="mb-4">
+            <h6 class="mb-3">Цена</h6>
+            <div class="row mb-3">
+              <div class="col">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="От"
+                  formControlName="minPrice"
+                />
+              </div>
+              <div class="col">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="До"
+                  formControlName="maxPrice"
+                />
+              </div>
+            </div>
+            <div class="d-grid gap-2">
+              @for(range of priceRanges; track range){
+              <button
+                class="btn btn-outline-secondary btn-sm text-start"
+                (click)="setPriceRange(range.min, range.max)"
+              >
+                {{ range.label }}
+              </button>
+              }
+            </div>
+          </div>
+
+          <!-- В наличии -->
+          <div class="mb-3">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="inStock"
+                formControlName="inStock"
+              />
+              <label class="form-check-label" for="inStock">
+                Только в наличии
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="col-md-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">
+          Результаты поиска: "{{ searchQuery }}"
+          <small class="text-muted">({{ totalItems }} товаров)</small>
+        </h4>
+
+        <!-- Сортировка -->
+        <div class="d-flex align-items-center">
+          <label class="me-2 mb-0">Сортировать:</label>
+          <select class="form-select form-select-sm" formControlName="sort">
+            <option value="relevance">По релевантности</option>
+            <option value="price_asc">По возрастанию цены</option>
+            <option value="price_desc">По убыванию цены</option>
+            <option value="rating">По рейтингу</option>
+            <option value="newest">Сначала новые</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Состояния -->
+      @if(isLoading){
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Загрузка...</span>
+        </div>
+        <p class="mt-3">Ищем товары...</p>
+      </div>
+      } @if(error){
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+      } @if(!isLoading && !error && products.length === 0){
+      <div class="text-center py-5">
+        <i class="bi bi-search text-muted" style="font-size: 5rem"></i>
+        <h5 class="mt-3">Товары не найдены</h5>
+        <p class="text-muted">Попробуйте изменить условия поиска</p>
+      </div>
+      }
+
+      <!-- Результаты поиска -->
+      @if(!isLoading && products.length > 0){
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @for(product of products; track product.id){
+        <div class="col">
+          <app-product-card [product]="product"></app-product-card>
+        </div>
+        }
+      </div>
+      }
+
+      <!-- Пагинация -->
+      @if(totalPages > 1){
+      <nav class="mt-5">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(currentPage - 1)">Назад</a>
+          </li>
+
+          @for(page of [].constructor(totalPages); track page){
+          <li class="page-item" [class.active]="currentPage === $index + 1">
+            <a class="page-link" (click)="changePage($index + 1)">{{
+              $index + 1
+            }}</a>
+          </li>
+          }
+
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="changePage(currentPage + 1)"
+              >Вперед</a
+            >
+          </li>
+        </ul>
+      </nav>
+      }
+    </div>
+  </div>
+</div>

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { lastValueFrom, map } from 'rxjs';
 import { Category } from '../../core/models/category.model';
 import { Product } from '../../core/models/product.model';
+import { CategoryService } from '../../core/services/category';
 import { ProductService } from '../../core/services/product';
 import { CategoryGrid } from '../../shared/components/category-grid/category-grid';
 import { HeroBanner } from '../../shared/components/hero-banner/hero-banner';
@@ -18,6 +19,7 @@ export class Home {
   newArrivals: Product[] = [];
   categories: Category[] = [];
   isLoading = true;
+  private readonly categoryService = inject(CategoryService);
 
   constructor(private productService: ProductService) {}
 
@@ -37,7 +39,7 @@ export class Home {
       );
 
       this.categories = await lastValueFrom(
-        this.productService.getCategories()
+        this.categoryService.getAllCategories()
       );
     } catch (error) {
       console.error('Error loading data:', error);

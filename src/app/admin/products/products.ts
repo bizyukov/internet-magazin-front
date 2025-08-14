@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Product } from '../../core/models/product.model';
-import { ProductService } from '../../core/services/product';
+import { AdminProductService } from '../../core/services/admin-product';
 
 @Component({
   selector: 'app-products',
@@ -20,7 +20,10 @@ export class Products {
   searchQuery = '';
   totalPages = 1;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(
+    private productService: AdminProductService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadProducts();

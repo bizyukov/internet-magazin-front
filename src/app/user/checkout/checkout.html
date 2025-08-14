@@ -1,0 +1,493 @@
+<div class="container py-5">
+  <!-- Шаги оформления -->
+  <div class="mb-5">
+    <ul class="nav nav-pills nav-justified">
+      @for(step of steps; track step){
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [class.active]="currentStep === $index + 1"
+          [class.disabled]="currentStep < $index + 1"
+          (click)="currentStep = $index + 1"
+        >
+          <span class="step-number me-2">{{ $index + 1 }}</span>
+          {{ step }}
+        </a>
+      </li>
+      }
+    </ul>
+  </div>
+
+  <!-- Шаг 1: Доставка -->
+  @if(currentStep === 1){
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white">
+      <h5 class="mb-0">Адрес доставки</h5>
+    </div>
+    <div class="card-body">
+      <!-- Выбор адреса -->
+      @if(addresses.length > 0){
+      <div class="mb-4">
+        <div class="list-group">
+          @for(address of addresses; track address){
+          <div
+            class="list-group-item list-group-item-action"
+            [class.active]="selectedAddress?.id === address.id"
+            (click)="selectedAddress = address"
+          >
+            <div class="d-flex align-items-center">
+              <div class="form-check me-3">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  [checked]="selectedAddress?.id === address.id"
+                />
+              </div>
+              <div>
+                <strong>{{ address.fullName }}</strong>
+                <div class="text-muted">
+                  {{ address.country }}, {{ address.region }},
+                  {{ address.city }}, {{ address.street }}, д.
+                  {{ address.building }}
+                  @if(address.apartment){
+                  <span>, кв. {{ address.apartment }}</span>
+                  }
+                </div>
+                <div class="text-muted">{{ address.phone }}</div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- Форма нового адреса -->
+      <div class="mb-4">
+        <h6 class="mb-3">Добавить новый адрес</h6>
+        <form [formGroup]="newAddressForm">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">ФИО *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="fullName"
+              />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Телефон *</label>
+              <input
+                type="tel"
+                class="form-control"
+                formControlName="phone"
+                placeholder="+7XXXXXXXXXX"
+              />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Страна *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="country"
+              />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Регион *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="region"
+              />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Город *</label>
+              <input type="text" class="form-control" formControlName="city" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Улица *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="street"
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Дом *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="building"
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Квартира</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="apartment"
+              />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Индекс *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="zipCode"
+              />
+            </div>
+            <div class="col-md-6">
+              <div class="form-check mt-4">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="isDefault"
+                />
+                <label class="form-check-label"
+                  >Использовать по умолчанию</label
+                >
+              </div>
+            </div>
+            <div class="col-12">
+              <button
+                class="btn btn-primary"
+                (click)="addNewAddress()"
+                [disabled]="newAddressForm.invalid"
+              >
+                Сохранить адрес
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Шаг 2: Оплата -->
+  @if(currentStep === 2){
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white">
+      <h5 class="mb-0">Способ оплаты</h5>
+    </div>
+    <div class="card-body">
+      <!-- Выбор карты -->
+      @if(paymentMethods.length > 0){
+      <div class="mb-4">
+        <div class="list-group">
+          @for(method of paymentMethods; track method){
+          <div
+            class="list-group-item list-group-item-action"
+            [class.active]="selectedPayment?.id === method.id"
+            (click)="selectedPayment = method"
+          >
+            <div class="d-flex align-items-center">
+              <div class="form-check me-3">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  [checked]="selectedPayment?.id === method.id"
+                />
+              </div>
+              <div>
+                <strong
+                  >Карта **** **** ****
+                  {{ method.details.cardNumber.slice(-4) }}</strong
+                >
+                <div class="text-muted">
+                  Действует до: {{ method.details.expiry }} |
+                  {{ method.details.cardHolder }}
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- Форма новой карты -->
+      <div>
+        <h6 class="mb-3">Добавить новую карту</h6>
+        <form [formGroup]="newPaymentForm">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Номер карты *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cardNumber"
+                placeholder="0000 0000 0000 0000"
+              />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Владелец карты *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cardHolder"
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Срок действия *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="expiryDate"
+                placeholder="MM/ГГ"
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">CVV *</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cvv"
+                placeholder="123"
+              />
+            </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="isDefault"
+                />
+                <label class="form-check-label"
+                  >Использовать по умолчанию</label
+                >
+              </div>
+            </div>
+            <div class="col-12">
+              <button
+                class="btn btn-primary"
+                (click)="addNewPaymentMethod()"
+                [disabled]="newPaymentForm.invalid"
+              >
+                Сохранить карту
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Шаг 3: Подтверждение -->
+  @if(currentStep === 3){
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white">
+      <h5 class="mb-0">Подтверждение заказа</h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <!-- Информация о заказе -->
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="mb-3">Информация о доставке</h6>
+              @if(selectedAddress){
+              <div>
+                <p class="mb-1">
+                  <strong>{{ selectedAddress.fullName }}</strong>
+                </p>
+                <p class="mb-1">
+                  {{ selectedAddress.country }}, {{ selectedAddress.region }},
+                  {{ selectedAddress.city }}
+                </p>
+                <p class="mb-1">
+                  {{ selectedAddress.street }}, д.
+                  {{ selectedAddress.building }}
+                </p>
+                @if(selectedAddress.apartment){
+                <p class="mb-1">Кв. {{ selectedAddress.apartment }}</p>
+                }
+
+                <p class="mb-1">Индекс: {{ selectedAddress.zipCode }}</p>
+                <p>Телефон: {{ selectedAddress.phone }}</p>
+              </div>
+              }
+
+              <hr />
+
+              <h6 class="mb-3">Способ оплаты</h6>
+              @if(selectedPayment){
+              <div>
+                <p class="mb-1">
+                  Карта **** **** ****
+                  {{ selectedPayment.details.cardNumber.slice(-4) }}
+                </p>
+                <p class="mb-1">
+                  Срок действия: {{ selectedPayment.details.expiry }}
+                </p>
+                <p>Владелец: {{ selectedPayment.details.cardHolder }}</p>
+              </div>
+              }
+
+              <hr />
+
+              <h6 class="mb-3">Комментарий к заказу</h6>
+              <textarea
+                class="form-control"
+                rows="3"
+                [(ngModel)]="orderComment"
+                placeholder="Ваши пожелания..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Корзина и итоги -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h6 class="mb-0">Ваш заказ</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Товар</th>
+                      <th>Кол-во</th>
+                      <th>Сумма</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for(item of cartItems; track item.id){
+                    <tr>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.quantity }} шт.</td>
+                      <td>
+                        {{
+                          item.price * item.quantity
+                            | currency : "RUB" : "symbol" : "1.2-2"
+                        }}
+                      </td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="d-flex mb-3">
+                <input
+                  type="text"
+                  class="form-control me-2"
+                  placeholder="Промокод"
+                  [(ngModel)]="promoCode"
+                />
+                <button
+                  class="btn btn-outline-secondary"
+                  (click)="applyPromoCode()"
+                >
+                  Применить
+                </button>
+              </div>
+
+              <div class="border-top pt-3">
+                <div class="d-flex justify-content-between mb-2">
+                  <span>Промежуточный итог:</span>
+                  <span>{{
+                    getSubtotal() | currency : "RUB" : "symbol" : "1.2-2"
+                  }}</span>
+                </div>
+
+                @if(discount > 0){
+                <div class="d-flex justify-content-between mb-2 text-success">
+                  <span>Скидка:</span>
+                  <span
+                    >-{{
+                      getSubtotal() * discount
+                        | currency : "RUB" : "symbol" : "1.2-2"
+                    }}</span
+                  >
+                </div>
+                }
+
+                <div class="d-flex justify-content-between mb-2">
+                  <span>Доставка:</span>
+                  <span>{{
+                    getShippingCost() | currency : "RUB" : "symbol" : "1.2-2"
+                  }}</span>
+                </div>
+
+                <div class="d-flex justify-content-between fw-bold fs-5 mt-2">
+                  <span>Итого:</span>
+                  <span>{{
+                    getTotal() | currency : "RUB" : "symbol" : "1.2-2"
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Шаг 4: Подтверждение -->
+  @if(currentStep === 4){
+  <div class="text-center py-5">
+    @if(!orderCreated && isLoading){
+    <div class="mb-4">
+      <div
+        class="spinner-border text-primary"
+        style="width: 3rem; height: 3rem"
+        role="status"
+      >
+        <span class="visually-hidden">Оформление заказа...</span>
+      </div>
+      <p class="mt-3">Пожалуйста, подождите. Ваш заказ оформляется.</p>
+    </div>
+    } @if(orderCreated){
+    <div class="mb-4">
+      <i class="bi bi-check-circle text-success" style="font-size: 5rem"></i>
+      <h2 class="mt-3">Заказ оформлен!</h2>
+      <p class="lead">
+        Спасибо за ваш заказ. Номер вашего заказа:
+        <strong>#{{ orderId }}</strong>
+      </p>
+      <p>На ваш email отправлено подтверждение заказа.</p>
+
+      <div class="mt-4">
+        <button class="btn btn-primary me-2" (click)="continueShopping()">
+          Продолжить покупки
+        </button>
+        <button
+          class="btn btn-outline-primary"
+          [routerLink]="['/user/orders', orderId]"
+        >
+          Посмотреть заказ
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+  }
+
+  <!-- Навигация -->
+  <div class="d-flex justify-content-between">
+    @if(currentStep > 1 && currentStep < 4){
+    <button class="btn btn-outline-secondary" (click)="prevStep()">
+      <i class="bi bi-arrow-left me-2"></i> Назад
+    </button>
+    } @if(currentStep < 4){
+    <div class="ms-auto">
+      <button
+        class="btn btn-primary"
+        (click)="nextStep()"
+        [disabled]="
+          (currentStep === 1 && !selectedAddress) ||
+          (currentStep === 2 && !selectedPayment)
+        "
+      >
+        {{ currentStep === 3 ? "Оформить заказ" : "Продолжить" }}
+        <i class="bi bi-arrow-right ms-2"></i>
+      </button>
+    </div>
+    }
+  </div>
+</div>

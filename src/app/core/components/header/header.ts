@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth';
 import { CartService } from '../../services/cart';
+import { Search } from '../../../shared/components/search/search';
+import { WishlistService } from '../../services/wishlist';
 
 @Component({
   standalone: true,
   selector: 'app-header',
-  imports: [AsyncPipe, FormsModule, RouterModule],
+  imports: [AsyncPipe, FormsModule, RouterModule, Search],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -19,11 +21,16 @@ export class Header {
   wishlistCount = 0;
 
   constructor(
+    private wishlistService: WishlistService,
     private cartService: CartService,
     public authService: AuthService
   ) {
     this.cartService.cart$.subscribe((cart) => {
       this.cartCount = cart.items.length;
+    });
+
+    this.wishlistService.wishlist$.subscribe((wishlist) => {
+      this.wishlistCount = wishlist.length;
     });
 
    /*  this.authService.userRole$.subscribe((role) => {

@@ -1,12 +1,12 @@
 <section class="mb-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="section-title">{{ title }}</h2>
-    <a [routerLink]="seeAllLink" class="btn btn-link">Смотреть все</a>
+    <a [routerLink]="['search']" class="btn btn-link">Смотреть все</a>
   </div>
 
   <div class="row g-4">
     @for (product of products; track product.id) {
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg-3" [routerLink]="['product/' + product.id]">
       <div class="card h-100">
         <img
           [src]="product.imageUrl"

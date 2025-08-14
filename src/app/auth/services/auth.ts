@@ -65,10 +65,11 @@ export class AuthService {
   }
 
   logout() {
+    //alert('logout');
     this.removeTokens();
     this.isAuthenticated$.next(false);
     this.userRole$.next(null);
-    this.router.navigate(['/']);
+    //this.router.navigate(['/']);
   }
 
   refreshToken(): Observable<{ accessToken: string; refreshToken: string }> {

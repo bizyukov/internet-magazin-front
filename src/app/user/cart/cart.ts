@@ -53,6 +53,6 @@ export class Cart {
   }
 
   proceedToCheckout() {
-    this.router.navigate(['/checkout']);
+    this.router.navigate(['/user', 'checkout']);
   }
 }

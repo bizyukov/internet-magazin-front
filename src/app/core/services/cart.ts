@@ -87,6 +87,12 @@ export class CartService {
     localStorage.removeItem('cart');
   }
 
+  isInCart(productId: number): boolean {
+    return this.getCurrentCart().items.some(
+      (item) => item.productId === productId
+    );
+  }
+
   private calculateTotal(items: CartItem[]): number {
     return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }
