@@ -54,16 +54,16 @@ export class ProductDetail implements OnInit {
         this.product = product;
         this.selectedImage = product.images?.[0] || product.imageUrl || null;
 
-        console.log('product', product);
+        //console.log('product', product);
 
         // Загрузка похожих товаров
-        if (product.category?.id) {
+        /* if (product.category?.id) {
           this.productService
             .getRelatedProducts(product.category.id, product.id)
             .subscribe((related) => {
               this.relatedProducts = related;
             });
-        }
+        } */
       },
       error: (err) => {
         this.error = 'Не удалось загрузить информацию о товаре';

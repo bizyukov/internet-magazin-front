@@ -7,8 +7,8 @@ import { PaginatedResponse } from '../models/paginated-response.model';
 @Injectable({
   providedIn: 'root',
 })
-export class OrderService {
-  private apiUrl = 'http://localhost:3000/orders';
+export class AdminOrderService {
+  private apiUrl = 'http://localhost:3000/admin/orders';
 
   constructor(private http: HttpClient) {}
 
@@ -18,12 +18,14 @@ export class OrderService {
     statusFilter: OrderStatus | undefined = undefined,
     searchQuery: string | undefined = undefined
   ): Observable<PaginatedResponse<Order>> {
-    return this.http.get<PaginatedResponse<Order>>(`${this.apiUrl}/user`/* , {
+    return this.http.get<PaginatedResponse<Order>>(
+      `${this.apiUrl}` /* , {
       params: { userId },
-    } */);
+    } */
+    );
   }
 
-  getOrderDetails(orderId: string): Observable<Order> {
+  /* getOrderDetails(orderId: string): Observable<Order> {
     return this.http.get<Order>(`${this.apiUrl}/${orderId}`);
   }
 
@@ -43,5 +45,5 @@ export class OrderService {
     return this.http.patch<Order>(`${this.apiUrl}/${orderId}/status`, {
       status,
     });
-  }
+  } */
 }

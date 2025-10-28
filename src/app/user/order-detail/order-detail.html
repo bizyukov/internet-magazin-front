@@ -4,9 +4,9 @@
     class="card-header bg-white d-flex justify-content-between align-items-center"
   >
     <div>
-      <h4 class="mb-0">Заказ #{{ order.id }}</h4>
+      <h4 class="mb-0">Заказ #{{ order.uuid }}</h4>
       <small class="text-muted"
-        >от {{ order.date | date : "dd.MM.yyyy HH:mm" }}</small
+        >от {{ order.createdAt | date : "dd.MM.yyyy HH:mm" }}</small
       >
     </div>
     <span
@@ -81,7 +81,7 @@
 
             <div class="mb-4">
               <h6>Способ оплаты</h6>
-              <p>{{ order.paymentMethod }}</p>
+              <p>{{ order.paymentMethod.type }}</p>
             </div>
 
             <div class="mb-4">

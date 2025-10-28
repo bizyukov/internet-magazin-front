@@ -25,7 +25,7 @@ export class ProductForm implements OnInit {
     stockQuantity: [0, [Validators.required, Validators.min(0)]],
     imageUrl: ['', [Validators.required]],
     categoryId: ['', [Validators.required]],
-    manufacturerId: [null, [Validators.required]],
+    manufacturerId: ['', [Validators.required]],
     isActive: [true],
     specifications: this.fb.group({
       weight: [0],
@@ -85,7 +85,24 @@ export class ProductForm implements OnInit {
   }
 
   onSubmit() {
-    if (this.productForm.invalid) return;
+    console.log('onSubmit', this.productForm.invalid, this.productForm);
+    this.productForm.updateValueAndValidity();
+    //if (this.productForm.invalid) return;
+
+    if (this.productForm.invalid) {
+      const errors: any = {};
+      Object.keys(this.productForm.controls).forEach((key) => {
+        (this.productForm as any).controls[key].markAsTouched();
+        const controlErrors = (this.productForm as any).controls[key]?.errors;
+        if (controlErrors) {
+          errors[key] = controlErrors;
+        }
+      });
+      console.log('Form Errors:', errors);
+      return;
+    } else {
+      console.log('Form is valid:', this.productForm.value);
+    }
 
     this.isLoading = true;
     this.formError = '';

@@ -69,7 +69,7 @@ export class AuthService {
     this.removeTokens();
     this.isAuthenticated$.next(false);
     this.userRole$.next(null);
-    //this.router.navigate(['/']);
+    this.router.navigate(['/']);
   }
 
   refreshToken(): Observable<{ accessToken: string; refreshToken: string }> {
@@ -181,6 +181,28 @@ export class AuthService {
     window.addEventListener('click', this.resetInactivityTimer.bind(this));
 
     this.resetInactivityTimer();
+  }
+
+  get isAuthenticated(): boolean {
+    return this.isAuthenticated$.value;
+  }
+
+  getCurrentUserId(): string | null {
+    const token = this.getToken();
+    console.log('token', token);
+    if (!token) return null;
+
+    // Декодирование JWT токена для получения ID пользователя
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.userId || payload.sub;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('accessToken');
   }
 
   /* private determineUserRole(token: string) {

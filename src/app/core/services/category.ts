@@ -23,7 +23,10 @@ export class CategoryService {
    * Создание новой категории
    * @param categoryData Данные категории
    */
-  createCategory(categoryData: { name: string }): Observable<Category> {
+  createCategory(categoryData: {
+    name: string;
+    imageUrl: string;
+  }): Observable<Category> {
     return this.http.post<Category>(this.apiUrl, categoryData);
   }
 
@@ -34,7 +37,7 @@ export class CategoryService {
    */
   updateCategory(
     categoryId: number,
-    categoryData: { name: string }
+    categoryData: { name: string; imageUrl: string }
   ): Observable<Category> {
     return this.http.put<Category>(
       `${this.apiUrl}/${categoryId}`,

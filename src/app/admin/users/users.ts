@@ -65,7 +65,7 @@ export class Users {
     this.loadUsers();
   }
 
-  toggleUserStatus(userId: string, currentStatus: boolean) {
+  toggleUserStatus(userId: number, currentStatus: boolean) {
     const newStatus = !currentStatus;
     this.userService.updateUserStatus(userId, newStatus).subscribe({
       next: () => {
@@ -80,7 +80,7 @@ export class Users {
     });
   }
 
-  changeUserRole(userId: string, event: Event) {
+  changeUserRole(userId: number, event: Event) {
     const newRole = (event.target as HTMLTextAreaElement).value as
       | 'user'
       | 'admin';

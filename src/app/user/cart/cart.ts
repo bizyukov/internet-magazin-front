@@ -1,18 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../core/services/cart';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './cart.html',
   styleUrl: './cart.scss',
 })
 export class Cart {
   private cartService = inject(CartService);
-  cart$ = this.cartService.cart$;
+  cart$ = this.cartService.cart$.pipe(
+    tap(cart=>{
+      console.log('cart', cart);
+    })
+  );
   promoCode = '';
   promoApplied = false;
   promoDiscount = 0;
@@ -24,6 +29,7 @@ export class Cart {
   }
 
   removeItem(productId: number) {
+    console.log('productId', productId);
     this.cartService.removeFromCart(productId);
   }
 

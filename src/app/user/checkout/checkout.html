@@ -448,7 +448,7 @@
       <h2 class="mt-3">Заказ оформлен!</h2>
       <p class="lead">
         Спасибо за ваш заказ. Номер вашего заказа:
-        <strong>#{{ orderId }}</strong>
+        <strong>#{{ orderUuid }}</strong>
       </p>
       <p>На ваш email отправлено подтверждение заказа.</p>
 
@@ -458,7 +458,7 @@
         </button>
         <button
           class="btn btn-outline-primary"
-          [routerLink]="['/user/orders', orderId]"
+          [routerLink]="['/user/orders', orderUuid]"
         >
           Посмотреть заказ
         </button>

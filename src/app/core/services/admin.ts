@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Order } from '../models/order.model';
-import { PaginatedResponse } from '../models/paginated-response.model';
 import { Product } from '../models/product.model';
 
 @Injectable({
@@ -17,17 +16,15 @@ export class AdminService {
     return this.http.get(`${this.apiUrl}/dashboard/stats`);
   }
 
-  getRecentOrders(limit: number): Observable<PaginatedResponse<Order>> {
-    return this.http.get<PaginatedResponse<Order>>(
-      `${this.apiUrl}/orders/recent`,
-      { params: { limit } }
-    );
+  getRecentOrders(limit: number): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.apiUrl}/orders/recent`, {
+      params: { limit },
+    });
   }
 
-  getTopProducts(limit: number): Observable<PaginatedResponse<Product>> {
-    return this.http.get<PaginatedResponse<Product>>(
-      `${this.apiUrl}/products/top`,
-      { params: { limit } }
-    );
+  getTopProducts(limit: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/products/top`, {
+      params: { limit },
+    });
   }
 }

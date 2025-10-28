@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { tap } from 'rxjs';
 import { AuthService } from '../../auth/services/auth';
 import { Address } from '../../core/models/address.model';
 import { PaymentMethod } from '../../core/models/payment-method.model';
@@ -38,7 +39,7 @@ export class Checkout {
   discount = 0;
   isLoading = false;
   orderCreated = false;
-  orderId: string | null = null;
+  orderUuid: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -225,20 +226,33 @@ export class Checkout {
       comment: this.orderComment || undefined,
     };
 
-    this.checkoutService.createOrder(orderData).subscribe({
-      next: (order) => {
-        this.orderId = order.id;
+    this.checkoutService
+      .createOrder(orderData)
+      .pipe(
+        tap((order) => {
+          console.log('createOrder1', order);
+          /* this.orderUuid = order.uuid;
         this.orderCreated = true;
         this.cartService.clearCart();
         this.isLoading = false;
-        this.currentStep++;
-      },
-      error: (err) => {
-        console.error('Order creation failed', err);
-        this.isLoading = false;
-        // Показать сообщение об ошибке
-      },
-    });
+        this.currentStep++; */
+        })
+      )
+      .subscribe({
+        next: (order) => {
+          console.log('createOrder2', order);
+          this.orderUuid = order.uuid;
+          this.orderCreated = true;
+          this.cartService.clearCart();
+          this.isLoading = false;
+          this.currentStep++;
+        },
+        error: (err) => {
+          console.error('Order creation failed', err);
+          this.isLoading = false;
+          // Показать сообщение об ошибке
+        },
+      });
   }
 
   continueShopping() {

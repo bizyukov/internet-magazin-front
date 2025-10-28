@@ -26,11 +26,11 @@ export class Dashboard {
     });
 
     this.adminService.getRecentOrders(5).subscribe((orders) => {
-      this.recentOrders = orders.items;
+      this.recentOrders = orders;
     });
 
     this.adminService.getTopProducts(5).subscribe((products) => {
-      this.topProducts = products.items;
+      this.topProducts = products;
     });
   }
 }

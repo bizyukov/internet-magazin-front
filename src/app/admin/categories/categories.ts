@@ -13,9 +13,11 @@ import { CategoryService } from '../../core/services/category';
 export class Categories {
   categories: Category[] = [];
   newCategoryName = '';
+  newCategoryImageUrl = '';
   isAdding = false;
   editId: number | null = null;
   editName = '';
+  editImageUrl = '';
 
   constructor(private categoryService: CategoryService) {}
 
@@ -32,13 +34,14 @@ export class Categories {
   startEdit(category: Category) {
     this.editId = category.id;
     this.editName = category.name;
+    this.editImageUrl = category.imageUrl;
   }
 
   saveEdit(categoryId: number) {
     if (!this.editName.trim()) return;
 
     this.categoryService
-      .updateCategory(categoryId, { name: this.editName })
+      .updateCategory(categoryId, { name: this.editName, imageUrl: this.editImageUrl})
       .subscribe(() => {
         this.editId = null;
         this.loadCategories();
@@ -54,10 +57,11 @@ export class Categories {
 
     this.isAdding = true;
     this.categoryService
-      .createCategory({ name: this.newCategoryName })
+      .createCategory({ name: this.newCategoryName, imageUrl: this.newCategoryImageUrl })
       .subscribe({
         next: () => {
           this.newCategoryName = '';
+          this.newCategoryImageUrl = '';
           this.isAdding = false;
           this.loadCategories();
         },

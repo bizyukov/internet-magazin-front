@@ -15,8 +15,8 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getProfile() {
-    return this.http.get(`${this.apiUrl}/profile`);
+  getProfile(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/profile`);
   }
 
   updateProfile(profileData: any) {
@@ -51,13 +51,13 @@ export class UserService {
     return this.http.get<PaginatedResponse<User>>(this.adminApiUrl, { params });
   }
 
-  updateUserStatus(userId: string, isActive: boolean): Observable<User> {
+  updateUserStatus(userId: number, isActive: boolean): Observable<User> {
     return this.http.patch<User>(`${this.adminApiUrl}/${userId}/status`, {
       isActive,
     });
   }
 
-  updateUserRole(userId: string, role: 'user' | 'admin'): Observable<User> {
+  updateUserRole(userId: number, role: 'user' | 'admin'): Observable<User> {
     return this.http.patch<User>(`${this.adminApiUrl}/${userId}/role`, {
       role,
     });

@@ -1,7 +1,8 @@
 export interface Order {
-  id: string; // Уникальный идентификатор заказа
+  uuid: any;// Уникальный идентификатор заказа
+  //id: string; 
   userId: string; // ID пользователя, сделавшего заказ
-  date: Date; // Дата и время оформления заказа
+  createdAt: Date; // Дата и время оформления заказа
 
   // Информация о товарах
   items: OrderItem[];

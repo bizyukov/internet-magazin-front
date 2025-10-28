@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgForOf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -8,10 +8,11 @@ import {
   OrderStatus,
 } from '../../core/models/order.model';
 import { OrderService } from '../../core/services/order';
+import { AdminOrderService } from '../../core/services/admin-order';
 
 @Component({
   selector: 'app-orders',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [NgForOf, CommonModule, RouterModule, FormsModule],
   templateUrl: './orders.html',
   styleUrl: './orders.scss',
 })
@@ -26,7 +27,7 @@ export class Orders {
   totalPages = 1;
   getOrderStatusText = getOrderStatusText;
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: AdminOrderService) {}
 
   ngOnInit() {
     this.loadOrders();
@@ -36,7 +37,6 @@ export class Orders {
     this.isLoading = true;
     this.orderService
       .getOrders(
-        this.currentPage,
         this.itemsPerPage,
         this.statusFilter !== 'all' ? this.statusFilter : undefined,
         this.searchQuery

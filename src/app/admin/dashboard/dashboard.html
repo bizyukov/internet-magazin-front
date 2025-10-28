@@ -25,7 +25,7 @@
           </div>
           <div>
             <h5 class="mb-0">
-              {{ stats.revenue | currency : "RUB" : "symbol" : "1.2-2" }}
+              {{ stats.revenue | currency : "RUB " : "symbol" : "1.2-2" }}
             </h5>
             <p class="text-muted mb-0">Выручка</p>
           </div>
@@ -85,14 +85,14 @@
               </tr>
             </thead>
             <tbody>
+              @for(order of recentOrders; track order.uuid){
               <tr
-                *ngFor="let order of recentOrders"
-                [routerLink]="['/admin/orders', order.id]"
+                [routerLink]="['/admin/orders', order.uuid]"
                 style="cursor: pointer"
               >
-                <td>#{{ order.id }}</td>
+                <td>{{ order.uuid }}</td>
                 <td>{{ order.customerName }}</td>
-                <td>{{ order.date | date : "dd.MM.yyyy" }}</td>
+                <td>{{ order.createdAt | date : "dd.MM.yyyy" }}</td>
                 <td>
                   {{ order.total | currency : "RUB" : "symbol" : "1.2-2" }}
                 </td>
@@ -110,6 +110,7 @@
                   </span>
                 </td>
               </tr>
+              }
             </tbody>
           </table>
         </div>
@@ -125,28 +126,27 @@
       </div>
       <div class="card-body">
         <div class="list-group">
-          <div
-            *ngFor="let product of topProducts"
-            class="list-group-item list-group-item-action"
-          >
+          @for(product of topProducts; track product.productId){
+          <div class="list-group-item list-group-item-action">
             <div class="d-flex align-items-center">
               <img
-                [src]="product.imageUrl"
+                [src]="product.product.imageUrl"
                 width="60"
                 height="60"
                 class="rounded me-3"
               />
               <div class="flex-grow-1">
-                <h6 class="mb-1">{{ product.name }}</h6>
+                <h6 class="mb-1">{{ product.product.name }}</h6>
                 <small class="text-muted"
-                  >Продано: {{ product.soldCount }} шт.</small
+                  >Продано: {{ product.totalSold }} шт.</small
                 >
               </div>
               <span class="text-primary fw-bold">
-                {{ product.price | currency : "RUB" : "symbol" : "1.2-2" }}
+                {{ product.product.price | currency : "RUB " : "symbol" : "1.2-2" }}
               </span>
             </div>
           </div>
+          }
         </div>
       </div>
     </div>

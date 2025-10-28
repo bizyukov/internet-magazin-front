@@ -9,7 +9,12 @@
         class="form-control"
         placeholder="Новая категория"
         [(ngModel)]="newCategoryName"
-        (keyup.enter)="addCategory()"
+      />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Адрес картинки"
+        [(ngModel)]="newCategoryImageUrl"
       />
       <button
         class="btn btn-primary"
@@ -55,11 +60,12 @@
                 {{ category.name }}
               </div>
               } @else{
+              <input type="text" class="form-control" [(ngModel)]="editName" />
               <input
                 type="text"
                 class="form-control"
-                [(ngModel)]="editName"
-                (keyup.enter)="saveEdit(category.id)"
+                placeholder="Адрес картинки"
+                [(ngModel)]="editImageUrl"
               />
               }
             </td>

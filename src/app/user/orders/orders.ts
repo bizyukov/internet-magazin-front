@@ -13,7 +13,8 @@ import { OrderService } from '../../core/services/order';
 })
 export class Orders {
   private orderService = inject(OrderService);
-  orders$ = this.orderService.getOrders(1).pipe(map((data) => data.items));
+  orders$ = this.orderService.getOrders().pipe(map((data) => data.items));
+
   getOrderStatusText = getOrderStatusText;
 
   constructor(private router: Router) {}
