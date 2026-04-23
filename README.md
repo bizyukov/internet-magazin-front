@@ -18,6 +18,7 @@
 ## 🧱 Architecture
 
 ![Architecture diagram](docs/architecture.md)
+![Схема архитектуры](docs/architecture.png)
 
 - **Frontend**: Angular 20 (Standalone components, Signals for state, new control flow `@if/@for`)
 - **State management**: Signals + Services (no NgRx for simplicity, but scalable)
