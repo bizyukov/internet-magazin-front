@@ -1,17 +1,36 @@
 # 🛒 Internet Magazin Frontend
 
 <p align="left">
-  <a href="https://github.com/bizyukov/internet-magazin-front/actions"><img src="https://github.com/bizyukov/internet-magazin-front/actions/workflows/ci.yml/badge.svg" alt="CI Status"></a>
-  <a href="https://codecov.io/gh/bizyukov/internet-magazin-front" > <img src="https://codecov.io/gh/bizyukov/internet-magazin-front/branch/main/graph/badge.svg?token=YOUR_CODECOV_TOKEN" alt="Code Coverage" /> </a>
-  <a href="https://sonarcloud.io/project/overview?id=bizyukov_internet-magazin-front"><img src="https://sonarcloud.io/api/project_badges/measure?project=bizyukov_internet-magazin-front&metric=alert_status" alt="Quality Gate Status"></a>
-  <img src="https://img.shields.io/github/license/bizyukov/internet-magazin-front" alt="License">
+  <!-- Project Status -->
+  <a href="https://github.com/bizyukov/internet-magazin-front/actions">
+    <img src="https://shields.io" alt="CI Status">
+  </a>
+  <a href="https://github.com">
+    <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+  </a>
+  <a href="CONTRIBUTING.md">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
+  </a>
+  <br>
+  <!-- Code Quality -->
+  <a href="https://codecov.io/gh/bizyukov/internet-magazin-front">
+    <img src="https://codecov.io/gh/bizyukov/internet-magazin-front/branch/main/graph/badge.svg?token=YOUR_CODECOV_TOKEN" alt="Code Coverage">
+  </a>
+  <a href="https://sonarcloud.io/project/overview?id=bizyukov_internet-magazin-front">
+    <img src="https://sonarcloud.io/api/project_badges/measure?project=bizyukov_internet-magazin-front&metric=alert_status" alt="Quality Gate Status">
+  </a>
+  <br>
+  <!-- Tech Stack -->
+  <a href="https://angular.io/">
+    <img src="https://img.shields.io/badge/Angular-20-red?logo=angular" alt="Angular 20">
+  </a>
+  <a href="https://angular.dev/guide/standalone-components">
+    <img src="https://img.shields.io/badge/Standalone-✓-blue" alt="Standalone Components">
+  </a>
+  <a href="https://typescriptlang.org">
+    <img src="https://shields.io" alt="TypeScript">
+  </a>
 </p>
-
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![CI](https://img.shields.io/github/actions/workflow/status/bizyukov/internet-magazin-front/ci.yml?branch=main&label=CI)](https://github.com/bizyukov/internet-magazin-front/actions)
-[![Angular](https://img.shields.io/badge/Angular-20-red?logo=angular)](https://angular.io/)
-[![Standalone](https://img.shields.io/badge/Standalone-✓-blue)](https://angular.dev/guide/standalone-components)
 
 > **Modern e‑commerce frontend** built with Angular 20 (Standalone, Signals) – cart, wishlist, multi‑step checkout, user dashboard, and full Swagger‑backed API integration.
 
