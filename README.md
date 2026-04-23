@@ -4,10 +4,15 @@
 ![npm version](https://img.shields.io/npm/v/latest?label=version)
 
 <p align="left">
+  <a href="https://angular.io/">
+    <img src="https://img.shields.io/badge/Angular-20-red?logo=angular" alt="Angular 20">
+  </a>
+  <a href="https://angular.dev/guide/standalone-components">
+    <img src="https://img.shields.io/badge/Standalone-✓-blue" alt="Standalone Components">
+  </a>
   <!-- Project Status -->
   <a href="https://github.com/bizyukov/internet-magazin-front/actions">
     <img src="https://github.com/bizyukov/internet-magazin-front/actions/workflows/ci.yml/badge.svg" alt="CI Status">
-    <!-- <img src="https://shields.io" alt="CI Status"> -->
   </a>
   <a href="https://github.com">
     <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
@@ -25,12 +30,8 @@
   </a>
   <br>
   <!-- Tech Stack -->
-  <a href="https://angular.io/">
-    <img src="https://img.shields.io/badge/Angular-20-red?logo=angular" alt="Angular 20">
-  </a>
-  <a href="https://angular.dev/guide/standalone-components">
-    <img src="https://img.shields.io/badge/Standalone-✓-blue" alt="Standalone Components">
-  </a>
+  
+  <br>
   <a href="https://www.typescriptlang.org/">
     <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
   </a>
