@@ -1,11 +1,5 @@
 # 🛒 Internet Magazin Frontend
 
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![CI](https://img.shields.io/github/actions/workflow/status/bizyukov/internet-magazin-front/ci.yml?branch=main&label=CI)](https://github.com/bizyukov/internet-magazin-front/actions)
-[![Angular](https://img.shields.io/badge/Angular-20-red?logo=angular)](https://angular.io/)
-[![Standalone](https://img.shields.io/badge/Standalone-✓-blue)](https://angular.dev/guide/standalone-components)
-
 <p align="left">
   <!-- Project Status -->
   <a href="https://github.com/bizyukov/internet-magazin-front/actions">
