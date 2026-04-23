@@ -1,5 +1,8 @@
 # 🛒 Internet Magazin Frontend
 
+![GitHub Repo stars](https://img.shields.io/github/stars/bizyukov/internet-magazin-front?style=social)
+![npm version](https://img.shields.io/npm/v/latest?label=version)
+
 <p align="left">
   <!-- Project Status -->
   <a href="https://github.com/bizyukov/internet-magazin-front/actions">
