@@ -1,11 +1,5 @@
 # 🛒 Internet Magazin Frontend
 
-<p align="left">
-  <a href="https://github.com/bizyukov/internet-magazin-front/actions"><img src="https://github.com/bizyukov/internet-magazin-front/actions/workflows/ci.yml/badge.svg" alt="CI Status"></a>
-  <a href="https://codecov.io/gh/bizyukov/internet-magazin-front" > <img src="https://codecov.io/gh/bizyukov/internet-magazin-front/branch/main/graph/badge.svg?token=YOUR_CODECOV_TOKEN" alt="Code Coverage" /> </a>
-  <a href="https://sonarcloud.io/project/overview?id=bizyukov_internet-magazin-front"><img src="https://sonarcloud.io/api/project_badges/measure?project=bizyukov_internet-magazin-front&metric=alert_status" alt="Quality Gate Status"></a>
-</p>
-
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![CI](https://img.shields.io/github/actions/workflow/status/bizyukov/internet-magazin-front/ci.yml?branch=main&label=CI)](https://github.com/bizyukov/internet-magazin-front/actions)
