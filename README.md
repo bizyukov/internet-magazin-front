@@ -29,7 +29,7 @@
     <img src="https://img.shields.io/badge/Standalone-✓-blue" alt="Standalone Components">
   </a>
   <a href="https://typescriptlang.org">
-    <img src="https://shields.io" alt="TypeScript">
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
   </a>
 </p>
 
