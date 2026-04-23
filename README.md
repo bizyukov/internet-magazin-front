@@ -31,8 +31,8 @@
   <a href="https://angular.dev/guide/standalone-components">
     <img src="https://img.shields.io/badge/Standalone-✓-blue" alt="Standalone Components">
   </a>
-  <a href="https://typescriptlang.org">
-    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <a href="https://www.typescriptlang.org/">
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
   </a>
 </p>
 
@@ -60,6 +60,7 @@
   - Private: user profile, order history, address book, payment methods
 
 ## 📁 Project Structure (Simplified)
+
 ```bash
 src/app/
 ├── core/ # Singleton services, guards, interceptors
@@ -101,9 +102,11 @@ cp .env.example .env.local
 npm start
 # Navigate to http://localhost:4200
 ```
+
 Note: Backend API should be running on http://localhost:3000 (see internet-magazin-back) https://github.com/bizyukov/internet-magazin-back
 
 ## 📚 Documentation
+
 Swagger UI for backend: http://localhost:3000/swagger
 
 Postman collection: docs/InternetMagazin.postman_collection.json
@@ -111,6 +114,7 @@ Postman collection: docs/InternetMagazin.postman_collection.json
 Storybook (if added): npm run storybook
 
 ## 🧪 Testing
+
 ```bash
 # Unit tests
 npm test
@@ -123,10 +127,12 @@ npm run test:coverage
 ```
 
 ## 🤝 Contributing
+
 See CONTRIBUTING.md.
 PRs, issues, and feature requests are welcome – especially for performance optimisations and accessibility improvements.
 
 ## 📚 Educational Value
+
 This project demonstrates:
 
 Angular 20 modern features: @if, @for, @let, signals, inject().
@@ -144,12 +150,15 @@ RxJS patterns for state management.
 It serves as an excellent reference for building scalable Angular applications and can be compared with my earlier Angular projects to illustrate professional growth.
 
 ## 📄 License
+
 MIT © Igor Biziukov
 
 ## ⭐️ Show your support
+
 Give a ⭐️ if this project helped you or inspired your own e‑commerce frontend.
 
 ## 👤 Author & EB‑1A Context
+
 GitHub: @bizyukov
 This repository is part of a curated portfolio documenting 15+ years of software development, supporting an EB‑1A extraordinary ability visa petition under the original contributions criterion.
 
